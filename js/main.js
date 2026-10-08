@@ -1,19 +1,20 @@
-// ==========================================
+// ======================================================
 // COMBINADO FC - MAIN.JS
-// ==========================================
+// ======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
     cargarPartidos();
     cargarGaleria();
     actualizarAnio();
+    configurarMenu();
 
 });
 
 
-// ==========================================
+// ======================================================
 // PARTIDOS
-// ==========================================
+// ======================================================
 
 async function cargarPartidos() {
 
@@ -29,17 +30,20 @@ async function cargarPartidos() {
 
         const partidos = datos.partidos || [];
 
+        console.log("Partidos cargados:", partidos);
+
         if (partidos.length === 0) {
             return;
         }
 
-        // Ordenar por fecha
+        // Ordenar partidos por fecha
         partidos.sort((a, b) => {
             return new Date(a.fecha_partido) - new Date(b.fecha_partido);
         });
 
-        mostrarUltimoPartido(partidos);
+        mostrarUltimoResultado(partidos);
         mostrarFixture(partidos);
+        mostrarResultados(partidos);
 
     } catch (error) {
 
@@ -50,11 +54,18 @@ async function cargarPartidos() {
 }
 
 
-// ==========================================
-// ÚLTIMO PARTIDO
-// ==========================================
+// ======================================================
+// ÚLTIMO RESULTADO
+// ======================================================
 
-function mostrarUltimoPartido(partidos) {
+function mostrarUltimoResultado(partidos) {
+
+    const contenedor = document.querySelector("#ultimo-resultado");
+
+    if (!contenedor) {
+        console.error("No existe #ultimo-resultado");
+        return;
+    }
 
     const finalizados = partidos.filter(
         partido => partido.estado === "finalizado"
@@ -66,74 +77,104 @@ function mostrarUltimoPartido(partidos) {
 
     const ultimo = finalizados[finalizados.length - 1];
 
-    const seccion = document.querySelector("#ultimo-partido");
+    const gano =
+        ultimo.goles_local > ultimo.goles_visitante;
 
-    if (!seccion) {
-        return;
+    const perdio =
+        ultimo.goles_local < ultimo.goles_visitante;
+
+    const empato =
+        ultimo.goles_local === ultimo.goles_visitante;
+
+    let resultadoTexto = "EMPATE";
+
+    if (gano) {
+        resultadoTexto = "VICTORIA";
     }
 
-    seccion.innerHTML = `
+    if (perdio) {
+        resultadoTexto = "DERROTA";
+    }
 
-        <div class="resultado-card">
+    contenedor.innerHTML = `
 
-            <div class="resultado-header">
-                <span>${ultimo.torneo}</span>
-                <span>Fecha ${ultimo.fecha}</span>
-            </div>
+        <div class="result-card">
 
-            <div class="resultado-equipos">
+            <div class="result-team">
 
-                <div class="equipo">
-                    <strong>${ultimo.local}</strong>
-                    <span>${ultimo.goles_local}</span>
-                </div>
-
-                <div class="resultado-separador">
-                    -
-                </div>
-
-                <div class="equipo">
-                    <strong>${ultimo.visitante}</strong>
-                    <span>${ultimo.goles_visitante}</span>
-                </div>
+                <span>${ultimo.local}</span>
 
             </div>
 
-            <div class="resultado-goleadores">
+            <div class="result-score">
 
-                ${generarGoleadores(ultimo.goleadores)}
+                <strong>
+                    ${ultimo.goles_local} - ${ultimo.goles_visitante}
+                </strong>
+
+                <small>
+                    ${resultadoTexto}
+                </small>
+
+            </div>
+
+            <div class="result-team">
+
+                <span>${ultimo.visitante}</span>
 
             </div>
 
         </div>
+
+        <div class="text-center mt-3">
+
+            <small class="text-muted">
+                ${ultimo.torneo} · Fecha ${ultimo.fecha}
+            </small>
+
+        </div>
+
+        ${mostrarGoleadores(ultimo)}
 
     `;
 
 }
 
 
-// ==========================================
-// GOLEADORES
-// ==========================================
+// ======================================================
+// GOLEADORES DEL PARTIDO
+// ======================================================
 
-function generarGoleadores(goleadores) {
+function mostrarGoleadores(partido) {
 
-    if (!goleadores || goleadores.length === 0) {
+    if (!partido.goleadores || partido.goleadores.length === 0) {
         return "";
     }
 
     return `
 
-        <div class="goleadores">
+        <div class="text-center mt-3">
 
-            <strong>⚽ Goles:</strong>
+            <strong>⚽ Goleadores</strong>
 
-            ${goleadores.map(goleador => `
-                <span>
-                    ${goleador.jugador}
-                    ${goleador.goles > 1 ? ` x${goleador.goles}` : ""}
-                </span>
-            `).join("")}
+            <div class="mt-2">
+
+                ${partido.goleadores.map(goleador => `
+
+                    <span class="badge bg-danger me-1 mb-1">
+
+                        ${goleador.jugador}
+
+                        ${goleador.goles > 1
+                            ? ` x${goleador.goles}`
+                            : ""
+                        }
+
+                    </span>
+
+                `).join("")}
+
+            </div>
 
         </div>
 
@@ -142,68 +183,155 @@ function generarGoleadores(goleadores) {
 }
 
 
-// ==========================================
-// FIXTURE Y RESULTADOS
-// ==========================================
+// ======================================================
+// FIXTURE
+// ======================================================
 
 function mostrarFixture(partidos) {
 
-    const contenedor = document.querySelector("#lista-partidos");
+    const contenedor = document.querySelector("#fixture");
 
     if (!contenedor) {
+        console.error("No existe #fixture");
         return;
     }
 
-    contenedor.innerHTML = "";
+    const proximos = partidos.filter(
+        partido => partido.estado !== "finalizado"
+    );
 
-    partidos.forEach(partido => {
+    if (proximos.length === 0) {
 
-        const resultado = partido.estado === "finalizado"
-            ? `${partido.goles_local} - ${partido.goles_visitante}`
-            : "vs";
+        contenedor.innerHTML = `
 
-        const tarjeta = document.createElement("div");
+            <p class="empty-message">
+                No hay próximos partidos cargados.
+            </p>
 
-        tarjeta.className = "partido-card";
+        `;
 
-        tarjeta.innerHTML = `
+        return;
+    }
 
-            <div class="partido-info">
+    contenedor.innerHTML = proximos.map(partido => `
 
-                <span class="partido-torneo">
-                    ${partido.torneo}
-                </span>
+        <div class="match-item">
 
-                <span class="partido-fecha">
-                    Fecha ${partido.fecha}
-                </span>
+            <div>
+
+                <strong>
+                    ${partido.local}
+                </strong>
+
+                <span> vs </span>
+
+                <strong>
+                    ${partido.visitante}
+                </strong>
 
             </div>
 
-            <div class="partido-equipos">
+            <small>
+                ${partido.torneo} · Fecha ${partido.fecha}
+            </small>
 
-                <strong>${partido.local}</strong>
+        </div>
 
-                <span class="partido-resultado">
-                    ${resultado}
-                </span>
+    `).join("");
 
-                <strong>${partido.visitante}</strong>
+}
+
+
+// ======================================================
+// RESULTADOS
+// ======================================================
+
+function mostrarResultados(partidos) {
+
+    const contenedor = document.querySelector("#resultados");
+
+    if (!contenedor) {
+        console.error("No existe #resultados");
+        return;
+    }
+
+    const finalizados = partidos
+        .filter(partido => partido.estado === "finalizado")
+        .reverse();
+
+    if (finalizados.length === 0) {
+
+        contenedor.innerHTML = `
+
+            <p class="empty-message">
+                Todavía no hay resultados cargados.
+            </p>
+
+        `;
+
+        return;
+    }
+
+    contenedor.innerHTML = finalizados.map(partido => {
+
+        let claseResultado = "empate";
+
+        if (partido.goles_local > partido.goles_visitante) {
+            claseResultado = "victoria";
+        }
+
+        if (partido.goles_local < partido.goles_visitante) {
+            claseResultado = "derrota";
+        }
+
+        return `
+
+            <div class="result-list-item">
+
+                <div class="result-list-date">
+
+                    <span>
+                        Fecha ${partido.fecha}
+                    </span>
+
+                    <small>
+                        ${partido.torneo}
+                    </small>
+
+                </div>
+
+                <div class="result-list-teams">
+
+                    <strong>
+                        ${partido.local}
+                    </strong>
+
+                    <span class="${claseResultado}">
+
+                        ${partido.goles_local}
+                        -
+                        ${partido.goles_visitante}
+
+                    </span>
+
+                    <strong>
+                        ${partido.visitante}
+                    </strong>
+
+                </div>
 
             </div>
 
         `;
 
-        contenedor.appendChild(tarjeta);
-
-    });
+    }).join("");
 
 }
 
 
-// ==========================================
+// ======================================================
 // GALERÍA
-// ==========================================
+// ======================================================
 
 const fotosGaleria = [
 
@@ -245,38 +373,32 @@ const fotosGaleria = [
 
 ];
 
-
 let fotosFiltradas = [...fotosGaleria];
 
 let fotoActual = 0;
 
 
-// ==========================================
-// MOSTRAR GALERÍA
-// ==========================================
+// ======================================================
+// CARGAR GALERÍA
+// ======================================================
 
 function cargarGaleria() {
-
-    const galeria = document.querySelector("#galeria");
-
-    if (!galeria) {
-        return;
-    }
 
     mostrarFotos("todos");
 
 }
 
 
-// ==========================================
-// FILTRO GALERÍA
-// ==========================================
+// ======================================================
+// MOSTRAR FOTOS
+// ======================================================
 
 function mostrarFotos(categoria) {
 
-    const galeria = document.querySelector("#galeria");
+    const galeria = document.querySelector("#galeria-grid");
 
     if (!galeria) {
+        console.error("No existe #galeria-grid");
         return;
     }
 
@@ -298,21 +420,31 @@ function mostrarFotos(categoria) {
 
         const elemento = document.createElement("div");
 
-        elemento.className = "galeria-item";
+        elemento.className = "gallery-item";
 
         elemento.innerHTML = `
 
             <img
                 src="${foto.imagen}"
                 alt="${foto.titulo}"
-                onclick="abrirGaleria(${indice})"
+                loading="lazy"
             >
 
-            <div class="galeria-overlay">
-                <span>${foto.titulo}</span>
+            <div class="gallery-overlay">
+
+                <span>
+                    ${foto.titulo}
+                </span>
+
             </div>
 
         `;
+
+        elemento.addEventListener("click", () => {
+
+            abrirGaleria(indice);
+
+        });
 
         galeria.appendChild(elemento);
 
@@ -321,53 +453,85 @@ function mostrarFotos(categoria) {
 }
 
 
-// ==========================================
-// ABRIR FOTO
-// ==========================================
+// ======================================================
+// FILTROS DE GALERÍA
+// ======================================================
+
+document.addEventListener("click", event => {
+
+    const boton = event.target.closest(".gallery-filter");
+
+    if (!boton) {
+        return;
+    }
+
+    const categoria = boton.dataset.filter;
+
+    document
+        .querySelectorAll(".gallery-filter")
+        .forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+    boton.classList.add("active");
+
+    mostrarFotos(categoria);
+
+});
+
+
+// ======================================================
+// ABRIR GALERÍA
+// ======================================================
 
 function abrirGaleria(indice) {
 
+    if (!fotosFiltradas[indice]) {
+        return;
+    }
+
     fotoActual = indice;
 
-    const modal = document.querySelector("#galeriaModal");
-    const imagen = document.querySelector("#imagenModal");
-    const titulo = document.querySelector("#tituloModal");
+    const modal = document.querySelector("#gallery-modal");
+    const imagen = document.querySelector("#gallery-modal-image");
+    const caption = document.querySelector("#gallery-modal-caption");
 
     if (!modal || !imagen) {
         return;
     }
 
     imagen.src = fotosFiltradas[fotoActual].imagen;
+    imagen.alt = fotosFiltradas[fotoActual].titulo;
 
-    if (titulo) {
-        titulo.textContent = fotosFiltradas[fotoActual].titulo;
+    if (caption) {
+        caption.textContent = fotosFiltradas[fotoActual].titulo;
     }
 
-    modal.classList.add("activo");
+    modal.classList.add("active");
 
 }
 
 
-// ==========================================
-// CERRAR FOTO
-// ==========================================
+// ======================================================
+// CERRAR GALERÍA
+// ======================================================
 
 function cerrarGaleria() {
 
-    const modal = document.querySelector("#galeriaModal");
+    const modal = document.querySelector("#gallery-modal");
 
     if (!modal) {
         return;
     }
 
-    modal.classList.remove("activo");
+    modal.classList.remove("active");
 
 }
 
 
-// ==========================================
+// ======================================================
 // FOTO ANTERIOR
-// ==========================================
+// ======================================================
 
 function fotoAnterior() {
 
@@ -386,9 +550,9 @@ function fotoAnterior() {
 }
 
 
-// ==========================================
+// ======================================================
 // FOTO SIGUIENTE
-// ==========================================
+// ======================================================
 
 function fotoSiguiente() {
 
@@ -407,90 +571,154 @@ function fotoSiguiente() {
 }
 
 
-// ==========================================
+// ======================================================
 // ACTUALIZAR MODAL
-// ==========================================
+// ======================================================
 
 function actualizarFotoModal() {
 
-    const imagen = document.querySelector("#imagenModal");
-    const titulo = document.querySelector("#tituloModal");
+    const imagen = document.querySelector("#gallery-modal-image");
+    const caption = document.querySelector("#gallery-modal-caption");
 
     if (!imagen) {
         return;
     }
 
     imagen.src = fotosFiltradas[fotoActual].imagen;
+    imagen.alt = fotosFiltradas[fotoActual].titulo;
 
-    if (titulo) {
-        titulo.textContent = fotosFiltradas[fotoActual].titulo;
+    if (caption) {
+        caption.textContent = fotosFiltradas[fotoActual].titulo;
     }
 
 }
 
 
-// ==========================================
-// FILTROS DE GALERÍA
-// ==========================================
+// ======================================================
+// BOTONES DEL MODAL
+// ======================================================
 
-document.addEventListener("click", (event) => {
+document.addEventListener("click", event => {
 
-    const boton = event.target.closest("[data-filtro]");
+    if (event.target.closest("#gallery-modal-close")) {
 
-    if (!boton) {
-        return;
+        cerrarGaleria();
+
     }
 
-    const filtro = boton.dataset.filtro;
+    if (event.target.closest("#gallery-modal-prev")) {
 
-    document
-        .querySelectorAll("[data-filtro]")
-        .forEach(btn => btn.classList.remove("activo"));
+        fotoAnterior();
 
-    boton.classList.add("activo");
+    }
 
-    mostrarFotos(filtro);
+    if (event.target.closest("#gallery-modal-next")) {
+
+        fotoSiguiente();
+
+    }
 
 });
 
 
-// ==========================================
-// TECLADO GALERÍA
-// ==========================================
+// ======================================================
+// CERRAR MODAL HACIENDO CLICK AFUERA
+// ======================================================
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("click", event => {
 
-    const modal = document.querySelector("#galeriaModal");
+    const modal = document.querySelector("#gallery-modal");
 
-    if (!modal || !modal.classList.contains("activo")) {
+    if (!modal) {
+        return;
+    }
+
+    if (event.target === modal) {
+
+        cerrarGaleria();
+
+    }
+
+});
+
+
+// ======================================================
+// TECLADO
+// ======================================================
+
+document.addEventListener("keydown", event => {
+
+    const modal = document.querySelector("#gallery-modal");
+
+    if (!modal || !modal.classList.contains("active")) {
         return;
     }
 
     if (event.key === "Escape") {
+
         cerrarGaleria();
+
     }
 
     if (event.key === "ArrowLeft") {
+
         fotoAnterior();
+
     }
 
     if (event.key === "ArrowRight") {
+
         fotoSiguiente();
+
     }
 
 });
 
 
-// ==========================================
-// AÑO AUTOMÁTICO
-// ==========================================
+// ======================================================
+// AÑO DEL FOOTER
+// ======================================================
 
 function actualizarAnio() {
 
-    const elemento = document.querySelector("#anio");
+    const elemento = document.querySelector("#current-year");
 
     if (elemento) {
+
         elemento.textContent = new Date().getFullYear();
+
     }
+
+}
+
+
+// ======================================================
+// MENÚ MOBILE
+// ======================================================
+
+function configurarMenu() {
+
+    const boton = document.querySelector(".navbar-toggler");
+    const menu = document.querySelector(".navbar-collapse");
+
+    if (!boton || !menu) {
+        return;
+    }
+
+    document
+        .querySelectorAll(".navbar-nav .nav-link")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                if (menu.classList.contains("show")) {
+
+                    boton.click();
+
+                }
+
+            });
+
+        });
 
 }

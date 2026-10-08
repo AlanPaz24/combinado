@@ -1,0 +1,25 @@
+{
+    "partidos": [
+        {
+            "id": 1,
+            "torneo": "Copa Chamigo",
+            "fecha": 1,
+            "fecha_partido": "2026-10-04",
+            "local": "Combinado FC",
+            "visitante": "Los de Siempre",
+            "goles_local": 3,
+            "goles_visitante": 1,
+            "estado": "finalizado",
+            "goleadores": [
+                {
+                    "jugador": "Kevin",
+                    "goles": 2
+                },
+                {
+                    "jugador": "Mati",
+                    "goles": 1
+                }
+            ]
+        }
+    ]
+}

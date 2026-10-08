@@ -1,0 +1,373 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #08130c;
+  color: #f1f5f9;
+  padding-bottom: 40px;
+}
+
+/* Header & Nav */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background-color: #0b1f13;
+  border-bottom: 3px solid #fbc02d;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.escudo-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: #fbc02d;
+}
+
+.nav-links a {
+  color: #e2e8f0;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #fbc02d;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(180deg, rgba(11,83,44,0.35) 0%, rgba(8,19,12,1) 100%), #0b1f13;
+  text-align: center;
+  padding: 50px 20px;
+  border-bottom: 1px solid #163821;
+}
+
+.hero img {
+  width: 110px;
+  margin-bottom: 15px;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.hero h1 span {
+  color: #fbc02d;
+}
+
+.hero p {
+  color: #a3e635;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Layout Secciones */
+.seccion {
+  max-width: 1200px;
+  margin: 45px auto;
+  padding: 0 20px;
+}
+
+h2 {
+  color: #ffffff;
+  font-size: 1.7rem;
+  margin-bottom: 22px;
+  border-left: 5px solid #fbc02d;
+  padding-left: 14px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+/* Tablas General */
+.tabla-container {
+  overflow-x: auto;
+  background: #0f2918;
+  border-radius: 10px;
+  border: 1px solid #1b472a;
+}
+
+.tabla-custom {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tabla-custom th, .tabla-custom td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #163d24;
+}
+
+.tabla-custom th {
+  background-color: #0b1f13;
+  color: #fbc02d;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.tabla-custom tr:hover {
+  background-color: #143620;
+}
+
+.highlight-row {
+  background-color: rgba(251, 192, 45, 0.12) !important;
+  font-weight: bold;
+}
+
+/* Grid Jugadores */
+.grid-jugadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.card-jugador {
+  background: linear-gradient(145deg, #0e2617, #0a1b10);
+  border: 1px solid #1b472a;
+  border-top: 4px solid #fbc02d;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-jugador:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 22px rgba(251, 192, 45, 0.25);
+  border-color: #fbc02d;
+}
+
+.card-jugador .dorsal {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fbc02d;
+}
+
+.foto-contenedor {
+  width: 95px;
+  height: 95px;
+  margin: 10px auto 12px;
+  border-radius: 50%;
+  border: 3px solid #fbc02d;
+  overflow: hidden;
+  background-color: #08130c;
+}
+
+.foto-jugador {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-jugador h3 {
+  font-size: 1.15rem;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.posicion {
+  display: inline-block;
+  background-color: rgba(251, 192, 45, 0.15);
+  color: #fbc02d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  background: #07120a;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-valor {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  color: #88a391;
+  text-transform: uppercase;
+}
+
+/* Partidos */
+.grid-partidos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card-partido {
+  background: #0f2918;
+  padding: 18px 22px;
+  border-radius: 10px;
+  border: 1px solid #1b472a;
+  border-left: 5px solid #fbc02d;
+}
+
+.partido-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #88a391;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.partido-resultado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.equipo {
+  font-size: 1.1rem;
+  font-weight: 800;
+  width: 40%;
+}
+
+.equipo.rival {
+  text-align: right;
+}
+
+.score {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #08130c;
+  background: #fbc02d;
+  padding: 4px 14px;
+  border-radius: 6px;
+}
+
+.partido-goleadores {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #163d24;
+  font-size: 0.82rem;
+  color: #a3e635;
+}
+
+/* Filtros */
+.filtros-posicion {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.btn-filtro {
+  background: #0f2918;
+  border: 1px solid #1b472a;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-filtro:hover, .btn-filtro.active {
+  background: #fbc02d;
+  color: #08130c;
+  border-color: #fbc02d;
+}
+
+/* Dos columnas para Tablas de Lideres */
+.grid-tablas-lideres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #0f2918;
+  padding: 25px;
+  border-radius: 12px;
+  border: 2px solid #fbc02d;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 1.6rem;
+  color: #88a391;
+  cursor: pointer;
+}
+
+.footer {
+  text-align: center;
+  padding: 25px;
+  background-color: #050c07;
+  color: #536d5b;
+  font-size: 0.8rem;
+  border-top: 1px solid #163d24;
+  margin-top: 40px;
+}

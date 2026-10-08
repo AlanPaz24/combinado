@@ -1,21 +1,12 @@
-{
-    "torneo": "Copa Chamigo",
-    "equipos": [
-        {
-            "id": 1,
-            "nombre": "Combinado FC"
-        },
-        {
-            "id": 2,
-            "nombre": "Los de Siempre"
-        },
-        {
-            "id": 3,
-            "nombre": "Equipo 3"
-        },
-        {
-            "id": 4,
-            "nombre": "Equipo 4"
-        }
-    ]
-}
+[
+  { "nombre": "Combinado FC", "esMiEquipo": true },
+  { "nombre": "Los perros", "esMiEquipo": false },
+  { "nombre": "Los pibes de la barber.", "esMiEquipo": false },
+  { "nombre": "Royal fc", "esMiEquipo": false },
+  { "nombre": "Team Fortu", "esMiEquipo": false },
+  { "nombre": "The borbotones. Fc", "esMiEquipo": false },
+  { "nombre": "El rejunte fc.", "esMiEquipo": false },
+  { "nombre": "Los 14. Fc", "esMiEquipo": false },
+  { "nombre": "Los de siempre..", "esMiEquipo": false },
+  { "nombre": "Zabaleta .", "esMiEquipo": false }
+]

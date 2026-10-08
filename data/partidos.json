@@ -1,43 +1,35 @@
-{
-    "partidos": [
-        {
-            "id": 1,
-            "torneo": "Copa Chamigo",
-            "fecha": 1,
-            "fecha_partido": "2026-10-04",
-            "local": "Combinado FC",
-            "visitante": "Los de Siempre",
-            "goles_local": 3,
-            "goles_visitante": 1,
-            "estado": "finalizado",
-
-            "jugadores": [
-                1,
-                2,
-                3,
-                4,
-                6,
-                7,
-                8,
-                9
-            ],
-
-            "goleadores": [
-                {
-                    "jugador_id": 1,
-                    "goles": 2
-                },
-                {
-                    "jugador_id": 2,
-                    "goles": 1
-                }
-            ],
-
-            "asistencias": [],
-
-            "amarillas": [],
-
-            "rojas": []
-        }
-    ]
-}
+[
+  {
+    "id": 1,
+    "rival": "Los de Siempre",
+    "fecha": "Fecha 1",
+    "hora": "22:00",
+    "condicion": "Local",
+    "estado": "finalizado",
+    "golesFavor": 3,
+    "golesRival": 1,
+    "goleadores": ["Kevin Lopez (2)", "Matias Sorini (1)"]
+  },
+  {
+    "id": 2,
+    "rival": "Royal",
+    "fecha": "Fecha 2",
+    "hora": "21:00",
+    "condicion": "Visitante",
+    "estado": "finalizado",
+    "golesFavor": 1,
+    "golesRival": 2,
+    "goleadores": ["Eduardo (1)"]
+  },
+  {
+    "id": 3,
+    "rival": "Team Fortu",
+    "fecha": "Fecha 3",
+    "hora": "18:00",
+    "condicion": "Local",
+    "estado": "pendiente",
+    "golesFavor": null,
+    "golesRival": null,
+    "goleadores": []
+  }
+]

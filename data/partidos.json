@@ -12,12 +12,22 @@
             "estado": "finalizado",
             "goleadores": [
                 {
-                    "jugador": "Kevin",
+                    "jugador": "Kevin Lopez",
                     "goles": 2
                 },
                 {
-                    "jugador": "Mati",
+                    "jugador": "Matias Sorini",
                     "goles": 1
+                }
+            ],
+            "asistencias": [
+                 {
+                    "jugador": "Ricardo Farias",
+                    "asistencias": 2
+                },
+                {
+                    "jugador": "Esteban Jiménez",
+                    "asistencias": 1
                 }
             ]
         }

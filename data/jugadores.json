@@ -1,3 +1,67 @@
 {
-    "jugadores": []
+    "jugadores": [
+        {
+            "id": 1,
+            "nombre": "Kevin Lopez",
+            "numero": "2",
+            "posicion": "Delantero",
+            "foto": ""
+        },
+        {
+            "id": 2,
+            "nombre": "Matias Sorini",
+            "numero": "8",
+            "posicion": "Delantero",
+            "foto": ""
+        },
+        {
+            "id": 2,
+            "nombre": "Dario Ledesma",
+            "numero": "18",
+            "posicion": "Medio Campista",
+            "foto": ""
+        },
+        {
+            "id": 4,
+            "nombre": "Eduardo Farias",
+            "numero": "5",
+            "posicion": "Defensor",
+            "foto": ""
+        },
+        {
+            "id": 5,
+            "nombre": "Santiago Paz",
+            "numero": "20",
+            "posicion": "Arquero",
+            "foto": ""
+        },
+        {
+            "id": 6,
+            "nombre": "Alan Paz",
+            "numero": "10",
+            "posicion": "Medio Campista",
+            "foto": ""
+        },
+        {
+            "id": 7,
+            "nombre": "Ricardo Farias",
+            "numero": "7",
+            "posicion": "Medio Campista",
+            "foto": ""
+        },
+        {
+            "id": 8,
+            "nombre": "Esteban Jiménez",
+            "numero": "21",
+            "posicion": "Delantero",
+            "foto": ""
+        },
+        {
+            "id": 9,
+            "nombre": "Diego Sequeira",
+            "numero": "9",
+            "posicion": "Delantero",
+            "foto": ""
+        }
+    ]
 }

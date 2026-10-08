@@ -10,19 +10,174 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ======================================================
+// VARIABLES GLOBALES
+// ======================================================
+
+let todosLosPartidos = [];
+let todosLosJugadores = [];
+
+
+// ======================================================
 // CARGAR TODOS LOS DATOS
 // ======================================================
 
 async function cargarDatos() {
 
+    await cargarJugadores();
     await cargarPartidos();
     await cargarTabla();
 
     cargarEstadisticas();
-
     cargarGaleria();
     actualizarAnio();
     configurarMenu();
+
+}
+
+
+// ======================================================
+// JUGADORES
+// ======================================================
+
+async function cargarJugadores() {
+
+    try {
+
+        const respuesta =
+            await fetch("data/jugadores.json");
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudo cargar jugadores.json"
+            );
+
+        }
+
+        const datos =
+            await respuesta.json();
+
+        todosLosJugadores =
+            datos.jugadores || [];
+
+        console.log(
+            "Jugadores cargados:",
+            todosLosJugadores
+        );
+
+        mostrarJugadores();
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando jugadores:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// MOSTRAR JUGADORES
+// ======================================================
+
+function mostrarJugadores() {
+
+    const contenedor =
+        document.querySelector(
+            "#lista-jugadores"
+        );
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    if (todosLosJugadores.length === 0) {
+
+        contenedor.innerHTML = `
+
+            <div class="col-12">
+
+                <p class="empty-message">
+                    Todavía no hay jugadores cargados.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML =
+        todosLosJugadores.map(jugador => {
+
+            const foto =
+                jugador.foto &&
+                jugador.foto.trim() !== ""
+
+                    ? jugador.foto
+
+                    : "img/jugadores/default.jpg";
+
+
+            return `
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <div class="player-card">
+
+                        <div class="player-image">
+
+                            <img
+                                src="${foto}"
+                                alt="${jugador.nombre}"
+                                loading="lazy"
+                                onerror="this.src='img/jugadores/default.jpg'"
+                            >
+
+                        </div>
+
+                        <div class="player-info">
+
+                            ${
+                                jugador.numero
+                                    ? `
+                                        <span class="player-number">
+                                            #${jugador.numero}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                            <h3>
+                                ${jugador.nombre}
+                            </h3>
+
+                            ${
+                                jugador.posicion
+                                    ? `
+                                        <span class="player-position">
+                                            ${jugador.posicion}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
 
 }
 
@@ -35,21 +190,35 @@ async function cargarPartidos() {
 
     try {
 
-        const respuesta = await fetch("data/partidos.json");
+        const respuesta =
+            await fetch("data/partidos.json");
 
         if (!respuesta.ok) {
-            throw new Error("No se pudo cargar partidos.json");
+
+            throw new Error(
+                "No se pudo cargar partidos.json"
+            );
+
         }
 
-        const datos = await respuesta.json();
+        const datos =
+            await respuesta.json();
 
-        const partidos = datos.partidos || [];
+        const partidos =
+            datos.partidos || [];
 
-        console.log("Partidos cargados:", partidos);
+        todosLosPartidos = partidos;
+
+        console.log(
+            "Partidos cargados:",
+            partidos
+        );
+
 
         if (partidos.length === 0) {
             return;
         }
+
 
         partidos.sort((a, b) => {
 
@@ -58,13 +227,17 @@ async function cargarPartidos() {
 
         });
 
+
         mostrarUltimoResultado(partidos);
         mostrarFixture(partidos);
         mostrarResultados(partidos);
 
     } catch (error) {
 
-        console.error("Error cargando partidos:", error);
+        console.error(
+            "Error cargando partidos:",
+            error
+        );
 
     }
 
@@ -78,43 +251,58 @@ async function cargarPartidos() {
 function mostrarUltimoResultado(partidos) {
 
     const contenedor =
-        document.querySelector("#ultimo-resultado");
+        document.querySelector(
+            "#ultimo-resultado"
+        );
 
     if (!contenedor) {
         return;
     }
 
+
     const finalizados =
         partidos.filter(
-            partido => partido.estado === "finalizado"
+            partido =>
+                partido.estado === "finalizado"
         );
+
 
     if (finalizados.length === 0) {
         return;
     }
 
-    const ultimo =
-        finalizados[finalizados.length - 1];
 
-    let resultadoTexto = "EMPATE";
+    const ultimo =
+        finalizados[
+            finalizados.length - 1
+        ];
+
+
+    let resultadoTexto =
+        "EMPATE";
+
 
     if (
         ultimo.goles_local >
         ultimo.goles_visitante
     ) {
 
-        resultadoTexto = "VICTORIA";
+        resultadoTexto =
+            "VICTORIA";
 
     }
+
 
     if (
         ultimo.goles_local <
         ultimo.goles_visitante
     ) {
 
-        resultadoTexto = "DERROTA";
+        resultadoTexto =
+            "DERROTA";
 
     }
+
 
     contenedor.innerHTML = `
 
@@ -128,11 +316,15 @@ function mostrarUltimoResultado(partidos) {
 
             </div>
 
+
             <div class="result-score">
 
                 <strong>
-                    ${ultimo.goles_local} -
+
+                    ${ultimo.goles_local}
+                    -
                     ${ultimo.goles_visitante}
+
                 </strong>
 
                 <small>
@@ -140,6 +332,7 @@ function mostrarUltimoResultado(partidos) {
                 </small>
 
             </div>
+
 
             <div class="result-team">
 
@@ -151,15 +344,20 @@ function mostrarUltimoResultado(partidos) {
 
         </div>
 
+
         <div class="text-center mt-3">
 
             <small class="text-muted">
-                ${ultimo.torneo} · Fecha ${ultimo.fecha}
+
+                ${ultimo.torneo}
+                · Fecha ${ultimo.fecha}
+
             </small>
 
         </div>
 
-        ${mostrarGoleadores(ultimo)}
+
+        ${mostrarGoleadoresPartido(ultimo)}
 
     `;
 
@@ -170,7 +368,7 @@ function mostrarUltimoResultado(partidos) {
 // GOLEADORES DEL PARTIDO
 // ======================================================
 
-function mostrarGoleadores(partido) {
+function mostrarGoleadoresPartido(partido) {
 
     if (
         !partido.goleadores ||
@@ -180,6 +378,7 @@ function mostrarGoleadores(partido) {
         return "";
 
     }
+
 
     return `
 
@@ -191,21 +390,26 @@ function mostrarGoleadores(partido) {
 
             <div class="mt-2">
 
-                ${partido.goleadores.map(goleador => `
+                ${
+                    partido.goleadores
+                        .map(goleador => `
 
-                    <span class="badge bg-danger me-1 mb-1">
+                            <span
+                                class="badge bg-danger me-1 mb-1">
 
-                        ${goleador.jugador}
+                                ${goleador.jugador}
 
-                        ${
-                            goleador.goles > 1
-                                ? ` x${goleador.goles}`
-                                : ""
-                        }
+                                ${
+                                    goleador.goles > 1
+                                        ? ` x${goleador.goles}`
+                                        : ""
+                                }
 
-                    </span>
+                            </span>
 
-                `).join("")}
+                        `)
+                        .join("")
+                }
 
             </div>
 
@@ -223,16 +427,21 @@ function mostrarGoleadores(partido) {
 function mostrarFixture(partidos) {
 
     const contenedor =
-        document.querySelector("#fixture");
+        document.querySelector(
+            "#fixture"
+        );
 
     if (!contenedor) {
         return;
     }
 
+
     const proximos =
         partidos.filter(
-            partido => partido.estado !== "finalizado"
+            partido =>
+                partido.estado !== "finalizado"
         );
+
 
     if (proximos.length === 0) {
 
@@ -247,6 +456,7 @@ function mostrarFixture(partidos) {
         return;
 
     }
+
 
     contenedor.innerHTML =
         proximos.map(partido => `
@@ -269,6 +479,7 @@ function mostrarFixture(partidos) {
 
                 </div>
 
+
                 <small>
 
                     ${partido.torneo}
@@ -290,18 +501,23 @@ function mostrarFixture(partidos) {
 function mostrarResultados(partidos) {
 
     const contenedor =
-        document.querySelector("#resultados");
+        document.querySelector(
+            "#resultados"
+        );
 
     if (!contenedor) {
         return;
     }
 
+
     const finalizados =
         partidos
             .filter(
-                partido => partido.estado === "finalizado"
+                partido =>
+                    partido.estado === "finalizado"
             )
             .reverse();
+
 
     if (finalizados.length === 0) {
 
@@ -317,28 +533,35 @@ function mostrarResultados(partidos) {
 
     }
 
+
     contenedor.innerHTML =
         finalizados.map(partido => {
 
-            let claseResultado = "empate";
+            let claseResultado =
+                "empate";
+
 
             if (
                 partido.goles_local >
                 partido.goles_visitante
             ) {
 
-                claseResultado = "victoria";
+                claseResultado =
+                    "victoria";
 
             }
+
 
             if (
                 partido.goles_local <
                 partido.goles_visitante
             ) {
 
-                claseResultado = "derrota";
+                claseResultado =
+                    "derrota";
 
             }
+
 
             return `
 
@@ -356,13 +579,15 @@ function mostrarResultados(partidos) {
 
                     </div>
 
+
                     <div class="result-list-teams">
 
                         <strong>
                             ${partido.local}
                         </strong>
 
-                        <span class="${claseResultado}">
+                        <span
+                            class="${claseResultado}">
 
                             ${partido.goles_local}
                             -
@@ -394,7 +619,10 @@ async function cargarTabla() {
     try {
 
         const respuestaEquipos =
-            await fetch("data/equipos.json");
+            await fetch(
+                "data/equipos.json"
+            );
+
 
         if (!respuestaEquipos.ok) {
 
@@ -404,15 +632,20 @@ async function cargarTabla() {
 
         }
 
+
         const datosEquipos =
             await respuestaEquipos.json();
+
 
         const equipos =
             datosEquipos.equipos || [];
 
 
         const respuestaPartidos =
-            await fetch("data/partidos.json");
+            await fetch(
+                "data/partidos.json"
+            );
+
 
         if (!respuestaPartidos.ok) {
 
@@ -422,8 +655,10 @@ async function cargarTabla() {
 
         }
 
+
         const datosPartidos =
             await respuestaPartidos.json();
+
 
         const partidos =
             datosPartidos.partidos || [];
@@ -434,6 +669,7 @@ async function cargarTabla() {
                 equipos,
                 partidos
             );
+
 
         mostrarTabla(tabla);
 
@@ -453,7 +689,10 @@ async function cargarTabla() {
 // CALCULAR TABLA
 // ======================================================
 
-function calcularTabla(equipos, partidos) {
+function calcularTabla(
+    equipos,
+    partidos
+) {
 
     const tabla =
         equipos.map(equipo => {
@@ -485,73 +724,90 @@ function calcularTabla(equipos, partidos) {
         );
 
 
-    partidosFinalizados.forEach(partido => {
+    partidosFinalizados.forEach(
+        partido => {
 
-        const local =
-            tabla.find(
-                equipo =>
-                    equipo.nombre === partido.local
-            );
-
-        const visitante =
-            tabla.find(
-                equipo =>
-                    equipo.nombre === partido.visitante
-            );
+            const local =
+                tabla.find(
+                    equipo =>
+                        equipo.nombre ===
+                        partido.local
+                );
 
 
-        if (!local || !visitante) {
-            return;
+            const visitante =
+                tabla.find(
+                    equipo =>
+                        equipo.nombre ===
+                        partido.visitante
+                );
+
+
+            if (!local || !visitante) {
+                return;
+            }
+
+
+            const golesLocal =
+                Number(
+                    partido.goles_local
+                );
+
+
+            const golesVisitante =
+                Number(
+                    partido.goles_visitante
+                );
+
+
+            local.pj++;
+            visitante.pj++;
+
+
+            local.gf += golesLocal;
+            local.gc += golesVisitante;
+
+
+            visitante.gf += golesVisitante;
+            visitante.gc += golesLocal;
+
+
+            if (
+                golesLocal >
+                golesVisitante
+            ) {
+
+                local.pg++;
+                local.pts += 3;
+
+                visitante.pp++;
+
+            }
+
+            else if (
+                golesLocal <
+                golesVisitante
+            ) {
+
+                visitante.pg++;
+                visitante.pts += 3;
+
+                local.pp++;
+
+            }
+
+            else {
+
+                local.pe++;
+                visitante.pe++;
+
+                local.pts++;
+                visitante.pts++;
+
+            }
+
         }
-
-
-        const golesLocal =
-            Number(partido.goles_local);
-
-        const golesVisitante =
-            Number(partido.goles_visitante);
-
-
-        local.pj++;
-        visitante.pj++;
-
-
-        local.gf += golesLocal;
-        local.gc += golesVisitante;
-
-        visitante.gf += golesVisitante;
-        visitante.gc += golesLocal;
-
-
-        if (golesLocal > golesVisitante) {
-
-            local.pg++;
-            local.pts += 3;
-
-            visitante.pp++;
-
-        }
-
-        else if (golesLocal < golesVisitante) {
-
-            visitante.pg++;
-            visitante.pts += 3;
-
-            local.pp++;
-
-        }
-
-        else {
-
-            local.pe++;
-            visitante.pe++;
-
-            local.pts++;
-            visitante.pts++;
-
-        }
-
-    });
+    );
 
 
     tabla.forEach(equipo => {
@@ -570,17 +826,20 @@ function calcularTabla(equipos, partidos) {
 
         }
 
+
         if (b.dg !== a.dg) {
 
             return b.dg - a.dg;
 
         }
 
+
         if (b.gf !== a.gf) {
 
             return b.gf - a.gf;
 
         }
+
 
         return a.nombre.localeCompare(
             b.nombre
@@ -601,7 +860,10 @@ function calcularTabla(equipos, partidos) {
 function mostrarTabla(tabla) {
 
     const contenedor =
-        document.querySelector("#tabla-posiciones");
+        document.querySelector(
+            "#tabla-posiciones"
+        );
+
 
     if (!contenedor) {
 
@@ -638,77 +900,89 @@ function mostrarTabla(tabla) {
 
 
     contenedor.innerHTML =
-        tabla.map((equipo, indice) => {
+        tabla.map(
+            (equipo, indice) => {
 
-            const diferencia =
-                equipo.dg > 0
-                    ? `+${equipo.dg}`
-                    : equipo.dg;
+                const diferencia =
+                    equipo.dg > 0
+                        ? `+${equipo.dg}`
+                        : equipo.dg;
 
 
-            return `
+                return `
 
-                <tr class="${
-                    equipo.nombre === "Combinado FC"
-                        ? "mi-equipo"
-                        : ""
-                }">
+                    <tr class="${
+                        equipo.nombre ===
+                        "Combinado FC"
+                            ? "mi-equipo"
+                            : ""
+                    }">
 
-                    <td>
-                        <strong>
-                            ${indice + 1}
-                        </strong>
-                    </td>
+                        <td>
+                            <strong>
+                                ${indice + 1}
+                            </strong>
+                        </td>
 
-                    <td>
 
-                        <strong>
-                            ${equipo.nombre}
-                        </strong>
+                        <td>
 
-                    </td>
+                            <strong>
+                                ${equipo.nombre}
+                            </strong>
 
-                    <td>
-                        ${equipo.pj}
-                    </td>
+                        </td>
 
-                    <td>
-                        ${equipo.pg}
-                    </td>
 
-                    <td>
-                        ${equipo.pe}
-                    </td>
+                        <td>
+                            ${equipo.pj}
+                        </td>
 
-                    <td>
-                        ${equipo.pp}
-                    </td>
 
-                    <td>
-                        ${equipo.gf}
-                    </td>
+                        <td>
+                            ${equipo.pg}
+                        </td>
 
-                    <td>
-                        ${equipo.gc}
-                    </td>
 
-                    <td>
-                        ${diferencia}
-                    </td>
+                        <td>
+                            ${equipo.pe}
+                        </td>
 
-                    <td>
 
-                        <strong>
-                            ${equipo.pts}
-                        </strong>
+                        <td>
+                            ${equipo.pp}
+                        </td>
 
-                    </td>
 
-                </tr>
+                        <td>
+                            ${equipo.gf}
+                        </td>
 
-            `;
 
-        }).join("");
+                        <td>
+                            ${equipo.gc}
+                        </td>
+
+
+                        <td>
+                            ${diferencia}
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+                                ${equipo.pts}
+                            </strong>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        ).join("");
 
 }
 
@@ -717,47 +991,11 @@ function mostrarTabla(tabla) {
 // ESTADÍSTICAS
 // ======================================================
 
-async function cargarEstadisticas() {
+function cargarEstadisticas() {
 
-    try {
+    const partidos =
+        todosLosPartidos;
 
-        const respuesta =
-            await fetch("data/partidos.json");
-
-        if (!respuesta.ok) {
-
-            throw new Error(
-                "No se pudo cargar partidos.json"
-            );
-
-        }
-
-        const datos =
-            await respuesta.json();
-
-        const partidos =
-            datos.partidos || [];
-
-
-        calcularEstadisticas(partidos);
-
-    } catch (error) {
-
-        console.error(
-            "Error cargando estadísticas:",
-            error
-        );
-
-    }
-
-}
-
-
-// ======================================================
-// CALCULAR ESTADÍSTICAS
-// ======================================================
-
-function calcularEstadisticas(partidos) {
 
     const finalizados =
         partidos.filter(
@@ -772,32 +1010,44 @@ function calcularEstadisticas(partidos) {
 
 
     let partidosJugados = 0;
+
     let victorias = 0;
+
     let empates = 0;
+
     let derrotas = 0;
 
     let golesFavor = 0;
+
     let golesContra = 0;
 
-
-    // ----------------------------------------------
-    // GOLEADORES
-    // ----------------------------------------------
 
     const goleadores = {};
 
 
+    // ==================================================
+    // RECORRER PARTIDOS
+    // ==================================================
+
     finalizados.forEach(partido => {
 
         const esLocal =
-            partido.local === "Combinado FC";
+            partido.local ===
+            "Combinado FC";
+
 
         const esVisitante =
-            partido.visitante === "Combinado FC";
+            partido.visitante ===
+            "Combinado FC";
 
 
-        if (!esLocal && !esVisitante) {
+        if (
+            !esLocal &&
+            !esVisitante
+        ) {
+
             return;
+
         }
 
 
@@ -806,27 +1056,45 @@ function calcularEstadisticas(partidos) {
 
         const golesCombinado =
             esLocal
-                ? Number(partido.goles_local)
-                : Number(partido.goles_visitante);
+                ? Number(
+                    partido.goles_local
+                )
+                : Number(
+                    partido.goles_visitante
+                );
 
 
         const golesRival =
             esLocal
-                ? Number(partido.goles_visitante)
-                : Number(partido.goles_local);
+                ? Number(
+                    partido.goles_visitante
+                )
+                : Number(
+                    partido.goles_local
+                );
 
 
-        golesFavor += golesCombinado;
-        golesContra += golesRival;
+        golesFavor +=
+            golesCombinado;
 
 
-        if (golesCombinado > golesRival) {
+        golesContra +=
+            golesRival;
+
+
+        if (
+            golesCombinado >
+            golesRival
+        ) {
 
             victorias++;
 
         }
 
-        else if (golesCombinado < golesRival) {
+        else if (
+            golesCombinado <
+            golesRival
+        ) {
 
             derrotas++;
 
@@ -839,76 +1107,118 @@ function calcularEstadisticas(partidos) {
         }
 
 
-        // ------------------------------------------
-        // GOLEADORES DEL PARTIDO
-        // ------------------------------------------
+        // ==============================================
+        // GOLEADORES
+        // ==============================================
 
         if (
-            partido.goleadores &&
-            Array.isArray(partido.goleadores)
+            Array.isArray(
+                partido.goleadores
+            )
         ) {
 
-            partido.goleadores.forEach(goleador => {
+            partido.goleadores.forEach(
+                goleador => {
 
-                const nombre =
-                    goleador.jugador;
-
-                const cantidad =
-                    Number(goleador.goles) || 0;
+                    const nombre =
+                        goleador.jugador;
 
 
-                if (!goleadores[nombre]) {
+                    const cantidad =
+                        Number(
+                            goleador.goles
+                        ) || 0;
 
-                    goleadores[nombre] = 0;
+
+                    if (
+                        !goleadores[nombre]
+                    ) {
+
+                        goleadores[nombre] =
+                            0;
+
+                    }
+
+
+                    goleadores[nombre] +=
+                        cantidad;
 
                 }
-
-
-                goleadores[nombre] += cantidad;
-
-            });
+            );
 
         }
 
     });
 
 
-    // ----------------------------------------------
-    // MÁXIMO GOLEADOR
-    // ----------------------------------------------
+    // ==================================================
+    // ORDENAR GOLEADORES
+    // ==================================================
 
-    let maximoGoleador = "—";
-    let golesMaximoGoleador = 0;
+    const rankingGoleadores =
+        Object.entries(
+            goleadores
+        )
+        .map(
+            ([nombre, goles]) => {
 
-
-    Object.entries(goleadores).forEach(
-        ([nombre, goles]) => {
-
-            if (goles > golesMaximoGoleador) {
-
-                maximoGoleador = nombre;
-                golesMaximoGoleador = goles;
+                return {
+                    nombre,
+                    goles
+                };
 
             }
+        )
+        .sort(
+            (a, b) =>
+                b.goles - a.goles
+        );
 
-        }
-    );
+
+    // ==================================================
+    // MÁXIMO GOLEADOR
+    // ==================================================
+
+    let maximoGoleador =
+        "—";
 
 
-    // ----------------------------------------------
-    // PROMEDIO DE GOL
-    // ----------------------------------------------
+    let golesMaximoGoleador =
+        0;
+
+
+    if (
+        rankingGoleadores.length > 0
+    ) {
+
+        maximoGoleador =
+            rankingGoleadores[0].nombre;
+
+
+        golesMaximoGoleador =
+            rankingGoleadores[0].goles;
+
+    }
+
+
+    // ==================================================
+    // PROMEDIO
+    // ==================================================
 
     const promedioGoles =
         partidosJugados > 0
-            ? (golesFavor / partidosJugados)
-                .toFixed(2)
+
+            ? (
+                golesFavor /
+                partidosJugados
+            ).toFixed(2)
+
             : "0.00";
 
 
-    // ----------------------------------------------
-    // MOSTRAR ESTADÍSTICAS
-    // ----------------------------------------------
+    // ==================================================
+    // TARJETAS PRINCIPALES
+    // ==================================================
 
     const tarjetas =
         document.querySelectorAll(
@@ -916,99 +1226,327 @@ function calcularEstadisticas(partidos) {
         );
 
 
-    if (tarjetas.length < 3) {
-        return;
+    if (
+        tarjetas.length >= 3
+    ) {
+
+        // GOLEADORES
+
+        tarjetas[0]
+            .querySelector("h3")
+            .innerHTML = `
+
+                ${maximoGoleador}
+
+                <small>
+
+                    ${golesMaximoGoleador}
+                    ${
+                        golesMaximoGoleador === 1
+                            ? "gol"
+                            : "goles"
+                    }
+
+                </small>
+
+            `;
+
+
+        // GOLES
+
+        tarjetas[1]
+            .querySelector("span")
+            .textContent =
+                "GOLES DEL EQUIPO";
+
+
+        tarjetas[1]
+            .querySelector("h3")
+            .innerHTML = `
+
+                ${golesFavor}
+
+                <small>
+                    goles convertidos
+                </small>
+
+            `;
+
+
+        // APARICIONES
+
+        tarjetas[2]
+            .querySelector("h3")
+            .innerHTML = `
+
+                ${partidosJugados}
+
+                <small>
+                    partidos jugados
+                </small>
+
+            `;
+
     }
 
 
-    // GOLEADORES
+    // ==================================================
+    // CREAR RANKING DE GOLEADORES
+    // ==================================================
 
-    tarjetas[0].querySelector("h3").innerHTML = `
-
-        ${maximoGoleador}
-
-        <small>
-            ${golesMaximoGoleador}
-            ${golesMaximoGoleador === 1 ? "gol" : "goles"}
-        </small>
-
-    `;
+    mostrarRankingGoleadores(
+        rankingGoleadores,
+        golesFavor
+    );
 
 
-    // ASISTENCIAS
-
-    tarjetas[1].querySelector("h3").innerHTML = `
-
-        ${golesFavor}
-
-        <small>
-            goles del equipo
-        </small>
-
-    `;
-
-
-    // APARICIONES
-
-    tarjetas[2].querySelector("h3").innerHTML = `
-
-        ${partidosJugados}
-
-        <small>
-            partidos jugados
-        </small>
-
-    `;
-
-
-    // ----------------------------------------------
+    // ==================================================
     // INFORMACIÓN EN CONSOLA
-    // ----------------------------------------------
+    // ==================================================
 
     console.log(
         "===== ESTADÍSTICAS COMBINADO FC ====="
     );
+
 
     console.log(
         "Partidos:",
         partidosJugados
     );
 
+
     console.log(
         "Victorias:",
         victorias
     );
+
 
     console.log(
         "Empates:",
         empates
     );
 
+
     console.log(
         "Derrotas:",
         derrotas
     );
+
 
     console.log(
         "Goles a favor:",
         golesFavor
     );
 
+
     console.log(
         "Goles en contra:",
         golesContra
     );
+
 
     console.log(
         "Promedio de gol:",
         promedioGoles
     );
 
+
     console.log(
-        "Máximo goleador:",
-        maximoGoleador,
-        golesMaximoGoleador
+        "Ranking goleadores:",
+        rankingGoleadores
     );
+
+}
+
+
+// ======================================================
+// MOSTRAR RANKING DE GOLEADORES
+// ======================================================
+
+function mostrarRankingGoleadores(
+    ranking,
+    golesEquipo
+) {
+
+    const estadisticas =
+        document.querySelector(
+            "#estadisticas .container"
+        );
+
+
+    if (!estadisticas) {
+        return;
+    }
+
+
+    let rankingExistente =
+        document.querySelector(
+            "#ranking-goleadores"
+        );
+
+
+    if (!rankingExistente) {
+
+        rankingExistente =
+            document.createElement(
+                "div"
+            );
+
+        rankingExistente.id =
+            "ranking-goleadores";
+
+        rankingExistente.className =
+            "row mt-5";
+
+        estadisticas.appendChild(
+            rankingExistente
+        );
+
+    }
+
+
+    if (ranking.length === 0) {
+
+        rankingExistente.innerHTML = `
+
+            <div class="col-12">
+
+                <div class="content-card">
+
+                    <h3>
+                        ⚽ Goleadores
+                    </h3>
+
+                    <p class="empty-message">
+                        Todavía no hay goles registrados.
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    rankingExistente.innerHTML = `
+
+        <div class="col-12">
+
+            <div class="content-card">
+
+                <div class="card-header-custom">
+
+                    <div>
+
+                        <span class="small-label">
+                            RANKING
+                        </span>
+
+                        <h3>
+                            ⚽ Goleadores
+                        </h3>
+
+                    </div>
+
+                    <i class="bi bi-trophy"></i>
+
+                </div>
+
+
+                <div class="scorers-list">
+
+                    ${
+                        ranking.map(
+                            (jugador, indice) => {
+
+                                const porcentaje =
+                                    golesEquipo > 0
+                                        ? (
+                                            jugador.goles /
+                                            golesEquipo
+                                        ) * 100
+                                        : 0;
+
+
+                                return `
+
+                                    <div
+                                        class="scorer-item">
+
+                                        <div
+                                            class="scorer-position">
+
+                                            ${
+                                                indice === 0
+                                                    ? "🥇"
+                                                    : indice === 1
+                                                        ? "🥈"
+                                                        : indice === 2
+                                                            ? "🥉"
+                                                            : `${indice + 1}`
+                                            }
+
+                                        </div>
+
+
+                                        <div
+                                            class="scorer-info">
+
+                                            <strong>
+                                                ${jugador.nombre}
+                                            </strong>
+
+                                            <div
+                                                class="scorer-bar">
+
+                                                <div
+                                                    class="scorer-bar-fill"
+                                                    style="
+                                                        width:${porcentaje}%;
+                                                    ">
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div
+                                            class="scorer-goals">
+
+                                            <strong>
+                                                ${jugador.goles}
+                                            </strong>
+
+                                            <span>
+                                                ${
+                                                    jugador.goles === 1
+                                                        ? "gol"
+                                                        : "goles"
+                                                }
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                `;
+
+                            }
+                        ).join("")
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
 
 }
 
@@ -1020,39 +1558,69 @@ function calcularEstadisticas(partidos) {
 const fotosGaleria = [
 
     {
-        imagen: "img/galeria/foto1.jpg",
-        categoria: "partidos",
-        titulo: "Día de partido"
+        imagen:
+            "img/galeria/foto1.jpg",
+
+        categoria:
+            "partidos",
+
+        titulo:
+            "Día de partido"
     },
 
     {
-        imagen: "img/galeria/foto2.jpg",
-        categoria: "equipo",
-        titulo: "Combinado FC"
+        imagen:
+            "img/galeria/foto2.jpg",
+
+        categoria:
+            "equipo",
+
+        titulo:
+            "Combinado FC"
     },
 
     {
-        imagen: "img/galeria/foto3.jpg",
-        categoria: "momentos",
-        titulo: "Momentos"
+        imagen:
+            "img/galeria/foto3.jpg",
+
+        categoria:
+            "momentos",
+
+        titulo:
+            "Momentos"
     },
 
     {
-        imagen: "img/galeria/foto4.jpg",
-        categoria: "partidos",
-        titulo: "Partido"
+        imagen:
+            "img/galeria/foto4.jpg",
+
+        categoria:
+            "partidos",
+
+        titulo:
+            "Partido"
     },
 
     {
-        imagen: "img/galeria/foto5.jpg",
-        categoria: "equipo",
-        titulo: "El equipo"
+        imagen:
+            "img/galeria/foto5.jpg",
+
+        categoria:
+            "equipo",
+
+        titulo:
+            "El equipo"
     },
 
     {
-        imagen: "img/galeria/foto6.jpg",
-        categoria: "momentos",
-        titulo: "Momentos Combinado"
+        imagen:
+            "img/galeria/foto6.jpg",
+
+        categoria:
+            "momentos",
+
+        titulo:
+            "Momentos Combinado"
     }
 
 ];
@@ -1060,6 +1628,7 @@ const fotosGaleria = [
 
 let fotosFiltradas =
     [...fotosGaleria];
+
 
 let fotoActual = 0;
 
@@ -1082,24 +1651,32 @@ function cargarGaleria() {
 function mostrarFotos(categoria) {
 
     const galeria =
-        document.querySelector("#galeria-grid");
+        document.querySelector(
+            "#galeria-grid"
+        );
+
 
     if (!galeria) {
         return;
     }
 
 
-    if (categoria === "todos") {
+    if (
+        categoria === "todos"
+    ) {
 
         fotosFiltradas =
             [...fotosGaleria];
 
-    } else {
+    }
+
+    else {
 
         fotosFiltradas =
             fotosGaleria.filter(
                 foto =>
-                    foto.categoria === categoria
+                    foto.categoria ===
+                    categoria
             );
 
     }
@@ -1112,7 +1689,10 @@ function mostrarFotos(categoria) {
         (foto, indice) => {
 
             const elemento =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             elemento.className =
                 "gallery-item";
@@ -1126,7 +1706,9 @@ function mostrarFotos(categoria) {
                     loading="lazy"
                 >
 
-                <div class="gallery-overlay">
+
+                <div
+                    class="gallery-overlay">
 
                     <span>
                         ${foto.titulo}
@@ -1141,7 +1723,9 @@ function mostrarFotos(categoria) {
                 "click",
                 () => {
 
-                    abrirGaleria(indice);
+                    abrirGaleria(
+                        indice
+                    );
 
                 }
             );
@@ -1170,6 +1754,7 @@ document.addEventListener(
                 ".gallery-filter"
             );
 
+
         if (!boton) {
             return;
         }
@@ -1197,7 +1782,9 @@ document.addEventListener(
         );
 
 
-        mostrarFotos(categoria);
+        mostrarFotos(
+            categoria
+        );
 
     }
 );
@@ -1209,12 +1796,17 @@ document.addEventListener(
 
 function abrirGaleria(indice) {
 
-    if (!fotosFiltradas[indice]) {
+    if (
+        !fotosFiltradas[indice]
+    ) {
+
         return;
+
     }
 
 
-    fotoActual = indice;
+    fotoActual =
+        indice;
 
 
     const modal =
@@ -1222,10 +1814,12 @@ function abrirGaleria(indice) {
             "#gallery-modal"
         );
 
+
     const imagen =
         document.querySelector(
             "#gallery-modal-image"
         );
+
 
     const caption =
         document.querySelector(
@@ -1233,8 +1827,13 @@ function abrirGaleria(indice) {
         );
 
 
-    if (!modal || !imagen) {
+    if (
+        !modal ||
+        !imagen
+    ) {
+
         return;
+
     }
 
 
@@ -1278,9 +1877,11 @@ function cerrarGaleria() {
             "#gallery-modal"
         );
 
+
     if (!modal) {
         return;
     }
+
 
     modal.classList.remove(
         "active"
@@ -1307,7 +1908,9 @@ function fotoAnterior() {
     fotoActual--;
 
 
-    if (fotoActual < 0) {
+    if (
+        fotoActual < 0
+    ) {
 
         fotoActual =
             fotosFiltradas.length - 1;
@@ -1363,6 +1966,7 @@ function actualizarFotoModal() {
         document.querySelector(
             "#gallery-modal-image"
         );
+
 
     const caption =
         document.querySelector(
@@ -1444,7 +2048,7 @@ document.addEventListener(
 
 
 // ======================================================
-// CERRAR MODAL HACIENDO CLICK AFUERA
+// CERRAR MODAL AFUERA
 // ======================================================
 
 document.addEventListener(
@@ -1462,7 +2066,9 @@ document.addEventListener(
         }
 
 
-        if (event.target === modal) {
+        if (
+            event.target === modal
+        ) {
 
             cerrarGaleria();
 
@@ -1498,7 +2104,9 @@ document.addEventListener(
         }
 
 
-        if (event.key === "Escape") {
+        if (
+            event.key === "Escape"
+        ) {
 
             cerrarGaleria();
 
@@ -1559,14 +2167,20 @@ function configurarMenu() {
             ".navbar-toggler"
         );
 
+
     const menu =
         document.querySelector(
             ".navbar-collapse"
         );
 
 
-    if (!boton || !menu) {
+    if (
+        !boton ||
+        !menu
+    ) {
+
         return;
+
     }
 
 

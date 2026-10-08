@@ -10,26 +10,34 @@
             "goles_local": 3,
             "goles_visitante": 1,
             "estado": "finalizado",
+
+            "jugadores": [
+                1,
+                2,
+                3,
+                4,
+                6,
+                7,
+                8,
+                9
+            ],
+
             "goleadores": [
                 {
-                    "jugador": "Kevin Lopez",
+                    "jugador_id": 1,
                     "goles": 2
                 },
                 {
-                    "jugador": "Matias Sorini",
+                    "jugador_id": 2,
                     "goles": 1
                 }
             ],
-            "asistencias": [
-                 {
-                    "jugador": "Ricardo Farias",
-                    "asistencias": 2
-                },
-                {
-                    "jugador": "Esteban Jiménez",
-                    "asistencias": 1
-                }
-            ]
+
+            "asistencias": [],
+
+            "amarillas": [],
+
+            "rojas": []
         }
     ]
 }

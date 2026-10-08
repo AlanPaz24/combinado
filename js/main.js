@@ -4,12 +4,24 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    cargarPartidos();
+    cargarDatos();
+
+});
+
+
+// ======================================================
+// CARGAR TODOS LOS DATOS
+// ======================================================
+
+async function cargarDatos() {
+
+    await cargarPartidos();
+    await cargarTabla();
     cargarGaleria();
     actualizarAnio();
     configurarMenu();
 
-});
+}
 
 
 // ======================================================
@@ -36,7 +48,6 @@ async function cargarPartidos() {
             return;
         }
 
-        // Ordenar partidos por fecha
         partidos.sort((a, b) => {
             return new Date(a.fecha_partido) - new Date(b.fecha_partido);
         });
@@ -63,7 +74,6 @@ function mostrarUltimoResultado(partidos) {
     const contenedor = document.querySelector("#ultimo-resultado");
 
     if (!contenedor) {
-        console.error("No existe #ultimo-resultado");
         return;
     }
 
@@ -77,22 +87,13 @@ function mostrarUltimoResultado(partidos) {
 
     const ultimo = finalizados[finalizados.length - 1];
 
-    const gano =
-        ultimo.goles_local > ultimo.goles_visitante;
-
-    const perdio =
-        ultimo.goles_local < ultimo.goles_visitante;
-
-    const empato =
-        ultimo.goles_local === ultimo.goles_visitante;
-
     let resultadoTexto = "EMPATE";
 
-    if (gano) {
+    if (ultimo.goles_local > ultimo.goles_visitante) {
         resultadoTexto = "VICTORIA";
     }
 
-    if (perdio) {
+    if (ultimo.goles_local < ultimo.goles_visitante) {
         resultadoTexto = "DERROTA";
     }
 
@@ -101,9 +102,7 @@ function mostrarUltimoResultado(partidos) {
         <div class="result-card">
 
             <div class="result-team">
-
                 <span>${ultimo.local}</span>
-
             </div>
 
             <div class="result-score">
@@ -119,9 +118,7 @@ function mostrarUltimoResultado(partidos) {
             </div>
 
             <div class="result-team">
-
                 <span>${ultimo.visitante}</span>
-
             </div>
 
         </div>
@@ -165,9 +162,10 @@ function mostrarGoleadores(partido) {
 
                         ${goleador.jugador}
 
-                        ${goleador.goles > 1
-                            ? ` x${goleador.goles}`
-                            : ""
+                        ${
+                            goleador.goles > 1
+                                ? ` x${goleador.goles}`
+                                : ""
                         }
 
                     </span>
@@ -192,7 +190,6 @@ function mostrarFixture(partidos) {
     const contenedor = document.querySelector("#fixture");
 
     if (!contenedor) {
-        console.error("No existe #fixture");
         return;
     }
 
@@ -251,7 +248,6 @@ function mostrarResultados(partidos) {
     const contenedor = document.querySelector("#resultados");
 
     if (!contenedor) {
-        console.error("No existe #resultados");
         return;
     }
 
@@ -330,6 +326,301 @@ function mostrarResultados(partidos) {
 
 
 // ======================================================
+// TABLA DE POSICIONES
+// ======================================================
+
+async function cargarTabla() {
+
+    try {
+
+        const respuestaEquipos = await fetch("data/equipos.json");
+
+        if (!respuestaEquipos.ok) {
+            throw new Error("No se pudo cargar equipos.json");
+        }
+
+        const datosEquipos = await respuestaEquipos.json();
+
+        const equipos = datosEquipos.equipos || [];
+
+
+        const respuestaPartidos = await fetch("data/partidos.json");
+
+        if (!respuestaPartidos.ok) {
+            throw new Error("No se pudo cargar partidos.json");
+        }
+
+        const datosPartidos = await respuestaPartidos.json();
+
+        const partidos = datosPartidos.partidos || [];
+
+
+        const tabla = calcularTabla(equipos, partidos);
+
+        mostrarTabla(tabla);
+
+    } catch (error) {
+
+        console.error("Error cargando tabla:", error);
+
+    }
+
+}
+
+
+// ======================================================
+// CALCULAR TABLA
+// ======================================================
+
+function calcularTabla(equipos, partidos) {
+
+    const tabla = equipos.map(equipo => {
+
+        return {
+
+            nombre: equipo.nombre,
+
+            pj: 0,
+            pg: 0,
+            pe: 0,
+            pp: 0,
+
+            gf: 0,
+            gc: 0,
+            dg: 0,
+
+            pts: 0
+
+        };
+
+    });
+
+
+    const partidosFinalizados = partidos.filter(
+        partido => partido.estado === "finalizado"
+    );
+
+
+    partidosFinalizados.forEach(partido => {
+
+        const local = tabla.find(
+            equipo => equipo.nombre === partido.local
+        );
+
+        const visitante = tabla.find(
+            equipo => equipo.nombre === partido.visitante
+        );
+
+
+        if (!local || !visitante) {
+            return;
+        }
+
+
+        const golesLocal = Number(partido.goles_local);
+        const golesVisitante = Number(partido.goles_visitante);
+
+
+        // Partidos jugados
+
+        local.pj++;
+        visitante.pj++;
+
+
+        // Goles a favor y en contra
+
+        local.gf += golesLocal;
+        local.gc += golesVisitante;
+
+        visitante.gf += golesVisitante;
+        visitante.gc += golesLocal;
+
+
+        // Victoria local
+
+        if (golesLocal > golesVisitante) {
+
+            local.pg++;
+            local.pts += 3;
+
+            visitante.pp++;
+
+        }
+
+
+        // Victoria visitante
+
+        else if (golesLocal < golesVisitante) {
+
+            visitante.pg++;
+            visitante.pts += 3;
+
+            local.pp++;
+
+        }
+
+
+        // Empate
+
+        else {
+
+            local.pe++;
+            visitante.pe++;
+
+            local.pts++;
+            visitante.pts++;
+
+        }
+
+    });
+
+
+    // Diferencia de gol
+
+    tabla.forEach(equipo => {
+
+        equipo.dg = equipo.gf - equipo.gc;
+
+    });
+
+
+    // Orden de clasificación
+
+    tabla.sort((a, b) => {
+
+        if (b.pts !== a.pts) {
+            return b.pts - a.pts;
+        }
+
+        if (b.dg !== a.dg) {
+            return b.dg - a.dg;
+        }
+
+        if (b.gf !== a.gf) {
+            return b.gf - a.gf;
+        }
+
+        return a.nombre.localeCompare(b.nombre);
+
+    });
+
+
+    return tabla;
+
+}
+
+
+// ======================================================
+// MOSTRAR TABLA
+// ======================================================
+
+function mostrarTabla(tabla) {
+
+    const contenedor = document.querySelector("#tabla-posiciones");
+
+    if (!contenedor) {
+        console.error("No existe #tabla-posiciones");
+        return;
+    }
+
+
+    if (tabla.length === 0) {
+
+        contenedor.innerHTML = `
+
+            <tr>
+
+                <td colspan="10" class="empty-table">
+
+                    Todavía no hay equipos cargados.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML = tabla.map((equipo, indice) => {
+
+        const diferencia =
+            equipo.dg > 0
+                ? `+${equipo.dg}`
+                : equipo.dg;
+
+
+        return `
+
+            <tr class="${
+                equipo.nombre === "Combinado FC"
+                    ? "mi-equipo"
+                    : ""
+            }">
+
+                <td>
+                    <strong>
+                        ${indice + 1}
+                    </strong>
+                </td>
+
+                <td>
+
+                    <strong>
+                        ${equipo.nombre}
+                    </strong>
+
+                </td>
+
+                <td>
+                    ${equipo.pj}
+                </td>
+
+                <td>
+                    ${equipo.pg}
+                </td>
+
+                <td>
+                    ${equipo.pe}
+                </td>
+
+                <td>
+                    ${equipo.pp}
+                </td>
+
+                <td>
+                    ${equipo.gf}
+                </td>
+
+                <td>
+                    ${equipo.gc}
+                </td>
+
+                <td>
+                    ${diferencia}
+                </td>
+
+                <td>
+
+                    <strong>
+                        ${equipo.pts}
+                    </strong>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }).join("");
+
+}
+
+
+// ======================================================
 // GALERÍA
 // ======================================================
 
@@ -373,6 +664,7 @@ const fotosGaleria = [
 
 ];
 
+
 let fotosFiltradas = [...fotosGaleria];
 
 let fotoActual = 0;
@@ -398,9 +690,9 @@ function mostrarFotos(categoria) {
     const galeria = document.querySelector("#galeria-grid");
 
     if (!galeria) {
-        console.error("No existe #galeria-grid");
         return;
     }
+
 
     if (categoria === "todos") {
 
@@ -414,13 +706,16 @@ function mostrarFotos(categoria) {
 
     }
 
+
     galeria.innerHTML = "";
+
 
     fotosFiltradas.forEach((foto, indice) => {
 
         const elemento = document.createElement("div");
 
         elemento.className = "gallery-item";
+
 
         elemento.innerHTML = `
 
@@ -440,11 +735,13 @@ function mostrarFotos(categoria) {
 
         `;
 
+
         elemento.addEventListener("click", () => {
 
             abrirGaleria(indice);
 
         });
+
 
         galeria.appendChild(elemento);
 
@@ -465,15 +762,21 @@ document.addEventListener("click", event => {
         return;
     }
 
+
     const categoria = boton.dataset.filter;
+
 
     document
         .querySelectorAll(".gallery-filter")
         .forEach(btn => {
+
             btn.classList.remove("active");
+
         });
 
+
     boton.classList.add("active");
+
 
     mostrarFotos(categoria);
 
@@ -490,22 +793,34 @@ function abrirGaleria(indice) {
         return;
     }
 
+
     fotoActual = indice;
 
+
     const modal = document.querySelector("#gallery-modal");
+
     const imagen = document.querySelector("#gallery-modal-image");
+
     const caption = document.querySelector("#gallery-modal-caption");
+
 
     if (!modal || !imagen) {
         return;
     }
 
+
     imagen.src = fotosFiltradas[fotoActual].imagen;
+
     imagen.alt = fotosFiltradas[fotoActual].titulo;
 
+
     if (caption) {
-        caption.textContent = fotosFiltradas[fotoActual].titulo;
+
+        caption.textContent =
+            fotosFiltradas[fotoActual].titulo;
+
     }
+
 
     modal.classList.add("active");
 
@@ -539,11 +854,17 @@ function fotoAnterior() {
         return;
     }
 
+
     fotoActual--;
 
+
     if (fotoActual < 0) {
-        fotoActual = fotosFiltradas.length - 1;
+
+        fotoActual =
+            fotosFiltradas.length - 1;
+
     }
+
 
     actualizarFotoModal();
 
@@ -560,11 +881,16 @@ function fotoSiguiente() {
         return;
     }
 
+
     fotoActual++;
 
+
     if (fotoActual >= fotosFiltradas.length) {
+
         fotoActual = 0;
+
     }
+
 
     actualizarFotoModal();
 
@@ -577,25 +903,38 @@ function fotoSiguiente() {
 
 function actualizarFotoModal() {
 
-    const imagen = document.querySelector("#gallery-modal-image");
-    const caption = document.querySelector("#gallery-modal-caption");
+    const imagen =
+        document.querySelector("#gallery-modal-image");
+
+    const caption =
+        document.querySelector("#gallery-modal-caption");
+
 
     if (!imagen) {
         return;
     }
 
-    imagen.src = fotosFiltradas[fotoActual].imagen;
-    imagen.alt = fotosFiltradas[fotoActual].titulo;
+
+    imagen.src =
+        fotosFiltradas[fotoActual].imagen;
+
+
+    imagen.alt =
+        fotosFiltradas[fotoActual].titulo;
+
 
     if (caption) {
-        caption.textContent = fotosFiltradas[fotoActual].titulo;
+
+        caption.textContent =
+            fotosFiltradas[fotoActual].titulo;
+
     }
 
 }
 
 
 // ======================================================
-// BOTONES DEL MODAL
+// BOTONES DE GALERÍA
 // ======================================================
 
 document.addEventListener("click", event => {
@@ -606,11 +945,13 @@ document.addEventListener("click", event => {
 
     }
 
+
     if (event.target.closest("#gallery-modal-prev")) {
 
         fotoAnterior();
 
     }
+
 
     if (event.target.closest("#gallery-modal-next")) {
 
@@ -627,11 +968,14 @@ document.addEventListener("click", event => {
 
 document.addEventListener("click", event => {
 
-    const modal = document.querySelector("#gallery-modal");
+    const modal =
+        document.querySelector("#gallery-modal");
+
 
     if (!modal) {
         return;
     }
+
 
     if (event.target === modal) {
 
@@ -648,11 +992,19 @@ document.addEventListener("click", event => {
 
 document.addEventListener("keydown", event => {
 
-    const modal = document.querySelector("#gallery-modal");
+    const modal =
+        document.querySelector("#gallery-modal");
 
-    if (!modal || !modal.classList.contains("active")) {
+
+    if (
+        !modal ||
+        !modal.classList.contains("active")
+    ) {
+
         return;
+
     }
+
 
     if (event.key === "Escape") {
 
@@ -660,11 +1012,13 @@ document.addEventListener("keydown", event => {
 
     }
 
+
     if (event.key === "ArrowLeft") {
 
         fotoAnterior();
 
     }
+
 
     if (event.key === "ArrowRight") {
 
@@ -676,16 +1030,19 @@ document.addEventListener("keydown", event => {
 
 
 // ======================================================
-// AÑO DEL FOOTER
+// AÑO
 // ======================================================
 
 function actualizarAnio() {
 
-    const elemento = document.querySelector("#current-year");
+    const elemento =
+        document.querySelector("#current-year");
+
 
     if (elemento) {
 
-        elemento.textContent = new Date().getFullYear();
+        elemento.textContent =
+            new Date().getFullYear();
 
     }
 
@@ -698,12 +1055,17 @@ function actualizarAnio() {
 
 function configurarMenu() {
 
-    const boton = document.querySelector(".navbar-toggler");
-    const menu = document.querySelector(".navbar-collapse");
+    const boton =
+        document.querySelector(".navbar-toggler");
+
+    const menu =
+        document.querySelector(".navbar-collapse");
+
 
     if (!boton || !menu) {
         return;
     }
+
 
     document
         .querySelectorAll(".navbar-nav .nav-link")

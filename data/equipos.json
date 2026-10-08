@@ -1,4 +1,21 @@
 {
     "torneo": "Copa Chamigo",
-    "equipos": []
+    "equipos": [
+        {
+            "id": 1,
+            "nombre": "Combinado FC"
+        },
+        {
+            "id": 2,
+            "nombre": "Los de Siempre"
+        },
+        {
+            "id": 3,
+            "nombre": "Equipo 3"
+        },
+        {
+            "id": 4,
+            "nombre": "Equipo 4"
+        }
+    ]
 }

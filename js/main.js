@@ -17,6 +17,9 @@ async function cargarDatos() {
 
     await cargarPartidos();
     await cargarTabla();
+
+    cargarEstadisticas();
+
     cargarGaleria();
     actualizarAnio();
     configurarMenu();
@@ -49,7 +52,10 @@ async function cargarPartidos() {
         }
 
         partidos.sort((a, b) => {
-            return new Date(a.fecha_partido) - new Date(b.fecha_partido);
+
+            return new Date(a.fecha_partido) -
+                   new Date(b.fecha_partido);
+
         });
 
         mostrarUltimoResultado(partidos);
@@ -71,30 +77,43 @@ async function cargarPartidos() {
 
 function mostrarUltimoResultado(partidos) {
 
-    const contenedor = document.querySelector("#ultimo-resultado");
+    const contenedor =
+        document.querySelector("#ultimo-resultado");
 
     if (!contenedor) {
         return;
     }
 
-    const finalizados = partidos.filter(
-        partido => partido.estado === "finalizado"
-    );
+    const finalizados =
+        partidos.filter(
+            partido => partido.estado === "finalizado"
+        );
 
     if (finalizados.length === 0) {
         return;
     }
 
-    const ultimo = finalizados[finalizados.length - 1];
+    const ultimo =
+        finalizados[finalizados.length - 1];
 
     let resultadoTexto = "EMPATE";
 
-    if (ultimo.goles_local > ultimo.goles_visitante) {
+    if (
+        ultimo.goles_local >
+        ultimo.goles_visitante
+    ) {
+
         resultadoTexto = "VICTORIA";
+
     }
 
-    if (ultimo.goles_local < ultimo.goles_visitante) {
+    if (
+        ultimo.goles_local <
+        ultimo.goles_visitante
+    ) {
+
         resultadoTexto = "DERROTA";
+
     }
 
     contenedor.innerHTML = `
@@ -102,13 +121,18 @@ function mostrarUltimoResultado(partidos) {
         <div class="result-card">
 
             <div class="result-team">
-                <span>${ultimo.local}</span>
+
+                <span>
+                    ${ultimo.local}
+                </span>
+
             </div>
 
             <div class="result-score">
 
                 <strong>
-                    ${ultimo.goles_local} - ${ultimo.goles_visitante}
+                    ${ultimo.goles_local} -
+                    ${ultimo.goles_visitante}
                 </strong>
 
                 <small>
@@ -118,7 +142,11 @@ function mostrarUltimoResultado(partidos) {
             </div>
 
             <div class="result-team">
-                <span>${ultimo.visitante}</span>
+
+                <span>
+                    ${ultimo.visitante}
+                </span>
+
             </div>
 
         </div>
@@ -144,15 +172,22 @@ function mostrarUltimoResultado(partidos) {
 
 function mostrarGoleadores(partido) {
 
-    if (!partido.goleadores || partido.goleadores.length === 0) {
+    if (
+        !partido.goleadores ||
+        partido.goleadores.length === 0
+    ) {
+
         return "";
+
     }
 
     return `
 
         <div class="text-center mt-3">
 
-            <strong>⚽ Goleadores</strong>
+            <strong>
+                ⚽ Goleadores
+            </strong>
 
             <div class="mt-2">
 
@@ -187,15 +222,17 @@ function mostrarGoleadores(partido) {
 
 function mostrarFixture(partidos) {
 
-    const contenedor = document.querySelector("#fixture");
+    const contenedor =
+        document.querySelector("#fixture");
 
     if (!contenedor) {
         return;
     }
 
-    const proximos = partidos.filter(
-        partido => partido.estado !== "finalizado"
-    );
+    const proximos =
+        partidos.filter(
+            partido => partido.estado !== "finalizado"
+        );
 
     if (proximos.length === 0) {
 
@@ -208,33 +245,40 @@ function mostrarFixture(partidos) {
         `;
 
         return;
+
     }
 
-    contenedor.innerHTML = proximos.map(partido => `
+    contenedor.innerHTML =
+        proximos.map(partido => `
 
-        <div class="match-item">
+            <div class="match-item">
 
-            <div>
+                <div>
 
-                <strong>
-                    ${partido.local}
-                </strong>
+                    <strong>
+                        ${partido.local}
+                    </strong>
 
-                <span> vs </span>
+                    <span>
+                        vs
+                    </span>
 
-                <strong>
-                    ${partido.visitante}
-                </strong>
+                    <strong>
+                        ${partido.visitante}
+                    </strong>
+
+                </div>
+
+                <small>
+
+                    ${partido.torneo}
+                    · Fecha ${partido.fecha}
+
+                </small>
 
             </div>
 
-            <small>
-                ${partido.torneo} · Fecha ${partido.fecha}
-            </small>
-
-        </div>
-
-    `).join("");
+        `).join("");
 
 }
 
@@ -245,15 +289,19 @@ function mostrarFixture(partidos) {
 
 function mostrarResultados(partidos) {
 
-    const contenedor = document.querySelector("#resultados");
+    const contenedor =
+        document.querySelector("#resultados");
 
     if (!contenedor) {
         return;
     }
 
-    const finalizados = partidos
-        .filter(partido => partido.estado === "finalizado")
-        .reverse();
+    const finalizados =
+        partidos
+            .filter(
+                partido => partido.estado === "finalizado"
+            )
+            .reverse();
 
     if (finalizados.length === 0) {
 
@@ -266,61 +314,73 @@ function mostrarResultados(partidos) {
         `;
 
         return;
+
     }
 
-    contenedor.innerHTML = finalizados.map(partido => {
+    contenedor.innerHTML =
+        finalizados.map(partido => {
 
-        let claseResultado = "empate";
+            let claseResultado = "empate";
 
-        if (partido.goles_local > partido.goles_visitante) {
-            claseResultado = "victoria";
-        }
+            if (
+                partido.goles_local >
+                partido.goles_visitante
+            ) {
 
-        if (partido.goles_local < partido.goles_visitante) {
-            claseResultado = "derrota";
-        }
+                claseResultado = "victoria";
 
-        return `
+            }
 
-            <div class="result-list-item">
+            if (
+                partido.goles_local <
+                partido.goles_visitante
+            ) {
 
-                <div class="result-list-date">
+                claseResultado = "derrota";
 
-                    <span>
-                        Fecha ${partido.fecha}
-                    </span>
+            }
 
-                    <small>
-                        ${partido.torneo}
-                    </small>
+            return `
+
+                <div class="result-list-item">
+
+                    <div class="result-list-date">
+
+                        <span>
+                            Fecha ${partido.fecha}
+                        </span>
+
+                        <small>
+                            ${partido.torneo}
+                        </small>
+
+                    </div>
+
+                    <div class="result-list-teams">
+
+                        <strong>
+                            ${partido.local}
+                        </strong>
+
+                        <span class="${claseResultado}">
+
+                            ${partido.goles_local}
+                            -
+                            ${partido.goles_visitante}
+
+                        </span>
+
+                        <strong>
+                            ${partido.visitante}
+                        </strong>
+
+                    </div>
 
                 </div>
 
-                <div class="result-list-teams">
+            `;
 
-                    <strong>
-                        ${partido.local}
-                    </strong>
-
-                    <span class="${claseResultado}">
-
-                        ${partido.goles_local}
-                        -
-                        ${partido.goles_visitante}
-
-                    </span>
-
-                    <strong>
-                        ${partido.visitante}
-                    </strong>
-
-                </div>
-
-            </div>
-
-        `;
-
-    }).join("");
+        }).join("");
 
 }
 
@@ -333,35 +393,56 @@ async function cargarTabla() {
 
     try {
 
-        const respuestaEquipos = await fetch("data/equipos.json");
+        const respuestaEquipos =
+            await fetch("data/equipos.json");
 
         if (!respuestaEquipos.ok) {
-            throw new Error("No se pudo cargar equipos.json");
+
+            throw new Error(
+                "No se pudo cargar equipos.json"
+            );
+
         }
 
-        const datosEquipos = await respuestaEquipos.json();
+        const datosEquipos =
+            await respuestaEquipos.json();
 
-        const equipos = datosEquipos.equipos || [];
+        const equipos =
+            datosEquipos.equipos || [];
 
 
-        const respuestaPartidos = await fetch("data/partidos.json");
+        const respuestaPartidos =
+            await fetch("data/partidos.json");
 
         if (!respuestaPartidos.ok) {
-            throw new Error("No se pudo cargar partidos.json");
+
+            throw new Error(
+                "No se pudo cargar partidos.json"
+            );
+
         }
 
-        const datosPartidos = await respuestaPartidos.json();
+        const datosPartidos =
+            await respuestaPartidos.json();
 
-        const partidos = datosPartidos.partidos || [];
+        const partidos =
+            datosPartidos.partidos || [];
 
 
-        const tabla = calcularTabla(equipos, partidos);
+        const tabla =
+            calcularTabla(
+                equipos,
+                partidos
+            );
 
         mostrarTabla(tabla);
 
     } catch (error) {
 
-        console.error("Error cargando tabla:", error);
+        console.error(
+            "Error cargando tabla:",
+            error
+        );
 
     }
 
@@ -374,42 +455,49 @@ async function cargarTabla() {
 
 function calcularTabla(equipos, partidos) {
 
-    const tabla = equipos.map(equipo => {
+    const tabla =
+        equipos.map(equipo => {
 
-        return {
+            return {
 
-            nombre: equipo.nombre,
+                nombre: equipo.nombre,
 
-            pj: 0,
-            pg: 0,
-            pe: 0,
-            pp: 0,
+                pj: 0,
+                pg: 0,
+                pe: 0,
+                pp: 0,
 
-            gf: 0,
-            gc: 0,
-            dg: 0,
+                gf: 0,
+                gc: 0,
+                dg: 0,
 
-            pts: 0
+                pts: 0
 
-        };
+            };
 
-    });
+        });
 
 
-    const partidosFinalizados = partidos.filter(
-        partido => partido.estado === "finalizado"
-    );
+    const partidosFinalizados =
+        partidos.filter(
+            partido =>
+                partido.estado === "finalizado"
+        );
 
 
     partidosFinalizados.forEach(partido => {
 
-        const local = tabla.find(
-            equipo => equipo.nombre === partido.local
-        );
+        const local =
+            tabla.find(
+                equipo =>
+                    equipo.nombre === partido.local
+            );
 
-        const visitante = tabla.find(
-            equipo => equipo.nombre === partido.visitante
-        );
+        const visitante =
+            tabla.find(
+                equipo =>
+                    equipo.nombre === partido.visitante
+            );
 
 
         if (!local || !visitante) {
@@ -417,17 +505,16 @@ function calcularTabla(equipos, partidos) {
         }
 
 
-        const golesLocal = Number(partido.goles_local);
-        const golesVisitante = Number(partido.goles_visitante);
+        const golesLocal =
+            Number(partido.goles_local);
 
+        const golesVisitante =
+            Number(partido.goles_visitante);
 
-        // Partidos jugados
 
         local.pj++;
         visitante.pj++;
 
-
-        // Goles a favor y en contra
 
         local.gf += golesLocal;
         local.gc += golesVisitante;
@@ -435,8 +522,6 @@ function calcularTabla(equipos, partidos) {
         visitante.gf += golesVisitante;
         visitante.gc += golesLocal;
 
-
-        // Victoria local
 
         if (golesLocal > golesVisitante) {
 
@@ -447,9 +532,6 @@ function calcularTabla(equipos, partidos) {
 
         }
 
-
-        // Victoria visitante
-
         else if (golesLocal < golesVisitante) {
 
             visitante.pg++;
@@ -458,9 +540,6 @@ function calcularTabla(equipos, partidos) {
             local.pp++;
 
         }
-
-
-        // Empate
 
         else {
 
@@ -475,32 +554,37 @@ function calcularTabla(equipos, partidos) {
     });
 
 
-    // Diferencia de gol
-
     tabla.forEach(equipo => {
 
-        equipo.dg = equipo.gf - equipo.gc;
+        equipo.dg =
+            equipo.gf - equipo.gc;
 
     });
 
 
-    // Orden de clasificación
-
     tabla.sort((a, b) => {
 
         if (b.pts !== a.pts) {
+
             return b.pts - a.pts;
+
         }
 
         if (b.dg !== a.dg) {
+
             return b.dg - a.dg;
+
         }
 
         if (b.gf !== a.gf) {
+
             return b.gf - a.gf;
+
         }
 
-        return a.nombre.localeCompare(b.nombre);
+        return a.nombre.localeCompare(
+            b.nombre
+        );
 
     });
 
@@ -516,11 +600,17 @@ function calcularTabla(equipos, partidos) {
 
 function mostrarTabla(tabla) {
 
-    const contenedor = document.querySelector("#tabla-posiciones");
+    const contenedor =
+        document.querySelector("#tabla-posiciones");
 
     if (!contenedor) {
-        console.error("No existe #tabla-posiciones");
+
+        console.error(
+            "No existe #tabla-posiciones"
+        );
+
         return;
+
     }
 
 
@@ -530,7 +620,9 @@ function mostrarTabla(tabla) {
 
             <tr>
 
-                <td colspan="10" class="empty-table">
+                <td
+                    colspan="10"
+                    class="empty-table">
 
                     Todavía no hay equipos cargados.
 
@@ -545,77 +637,378 @@ function mostrarTabla(tabla) {
     }
 
 
-    contenedor.innerHTML = tabla.map((equipo, indice) => {
+    contenedor.innerHTML =
+        tabla.map((equipo, indice) => {
 
-        const diferencia =
-            equipo.dg > 0
-                ? `+${equipo.dg}`
-                : equipo.dg;
+            const diferencia =
+                equipo.dg > 0
+                    ? `+${equipo.dg}`
+                    : equipo.dg;
 
 
-        return `
+            return `
 
-            <tr class="${
-                equipo.nombre === "Combinado FC"
-                    ? "mi-equipo"
-                    : ""
-            }">
+                <tr class="${
+                    equipo.nombre === "Combinado FC"
+                        ? "mi-equipo"
+                        : ""
+                }">
 
-                <td>
-                    <strong>
-                        ${indice + 1}
-                    </strong>
-                </td>
+                    <td>
+                        <strong>
+                            ${indice + 1}
+                        </strong>
+                    </td>
 
-                <td>
+                    <td>
 
-                    <strong>
-                        ${equipo.nombre}
-                    </strong>
+                        <strong>
+                            ${equipo.nombre}
+                        </strong>
 
-                </td>
+                    </td>
 
-                <td>
-                    ${equipo.pj}
-                </td>
+                    <td>
+                        ${equipo.pj}
+                    </td>
 
-                <td>
-                    ${equipo.pg}
-                </td>
+                    <td>
+                        ${equipo.pg}
+                    </td>
 
-                <td>
-                    ${equipo.pe}
-                </td>
+                    <td>
+                        ${equipo.pe}
+                    </td>
 
-                <td>
-                    ${equipo.pp}
-                </td>
+                    <td>
+                        ${equipo.pp}
+                    </td>
 
-                <td>
-                    ${equipo.gf}
-                </td>
+                    <td>
+                        ${equipo.gf}
+                    </td>
 
-                <td>
-                    ${equipo.gc}
-                </td>
+                    <td>
+                        ${equipo.gc}
+                    </td>
 
-                <td>
-                    ${diferencia}
-                </td>
+                    <td>
+                        ${diferencia}
+                    </td>
 
-                <td>
+                    <td>
 
-                    <strong>
-                        ${equipo.pts}
-                    </strong>
+                        <strong>
+                            ${equipo.pts}
+                        </strong>
 
-                </td>
+                    </td>
 
-            </tr>
+                </tr>
 
-        `;
+            `;
 
-    }).join("");
+        }).join("");
+
+}
+
+
+// ======================================================
+// ESTADÍSTICAS
+// ======================================================
+
+async function cargarEstadisticas() {
+
+    try {
+
+        const respuesta =
+            await fetch("data/partidos.json");
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudo cargar partidos.json"
+            );
+
+        }
+
+        const datos =
+            await respuesta.json();
+
+        const partidos =
+            datos.partidos || [];
+
+
+        calcularEstadisticas(partidos);
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando estadísticas:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================================
+// CALCULAR ESTADÍSTICAS
+// ======================================================
+
+function calcularEstadisticas(partidos) {
+
+    const finalizados =
+        partidos.filter(
+            partido =>
+                partido.estado === "finalizado"
+        );
+
+
+    if (finalizados.length === 0) {
+        return;
+    }
+
+
+    let partidosJugados = 0;
+    let victorias = 0;
+    let empates = 0;
+    let derrotas = 0;
+
+    let golesFavor = 0;
+    let golesContra = 0;
+
+
+    // ----------------------------------------------
+    // GOLEADORES
+    // ----------------------------------------------
+
+    const goleadores = {};
+
+
+    finalizados.forEach(partido => {
+
+        const esLocal =
+            partido.local === "Combinado FC";
+
+        const esVisitante =
+            partido.visitante === "Combinado FC";
+
+
+        if (!esLocal && !esVisitante) {
+            return;
+        }
+
+
+        partidosJugados++;
+
+
+        const golesCombinado =
+            esLocal
+                ? Number(partido.goles_local)
+                : Number(partido.goles_visitante);
+
+
+        const golesRival =
+            esLocal
+                ? Number(partido.goles_visitante)
+                : Number(partido.goles_local);
+
+
+        golesFavor += golesCombinado;
+        golesContra += golesRival;
+
+
+        if (golesCombinado > golesRival) {
+
+            victorias++;
+
+        }
+
+        else if (golesCombinado < golesRival) {
+
+            derrotas++;
+
+        }
+
+        else {
+
+            empates++;
+
+        }
+
+
+        // ------------------------------------------
+        // GOLEADORES DEL PARTIDO
+        // ------------------------------------------
+
+        if (
+            partido.goleadores &&
+            Array.isArray(partido.goleadores)
+        ) {
+
+            partido.goleadores.forEach(goleador => {
+
+                const nombre =
+                    goleador.jugador;
+
+                const cantidad =
+                    Number(goleador.goles) || 0;
+
+
+                if (!goleadores[nombre]) {
+
+                    goleadores[nombre] = 0;
+
+                }
+
+
+                goleadores[nombre] += cantidad;
+
+            });
+
+        }
+
+    });
+
+
+    // ----------------------------------------------
+    // MÁXIMO GOLEADOR
+    // ----------------------------------------------
+
+    let maximoGoleador = "—";
+    let golesMaximoGoleador = 0;
+
+
+    Object.entries(goleadores).forEach(
+        ([nombre, goles]) => {
+
+            if (goles > golesMaximoGoleador) {
+
+                maximoGoleador = nombre;
+                golesMaximoGoleador = goles;
+
+            }
+
+        }
+    );
+
+
+    // ----------------------------------------------
+    // PROMEDIO DE GOL
+    // ----------------------------------------------
+
+    const promedioGoles =
+        partidosJugados > 0
+            ? (golesFavor / partidosJugados)
+                .toFixed(2)
+            : "0.00";
+
+
+    // ----------------------------------------------
+    // MOSTRAR ESTADÍSTICAS
+    // ----------------------------------------------
+
+    const tarjetas =
+        document.querySelectorAll(
+            "#estadisticas .stat-card"
+        );
+
+
+    if (tarjetas.length < 3) {
+        return;
+    }
+
+
+    // GOLEADORES
+
+    tarjetas[0].querySelector("h3").innerHTML = `
+
+        ${maximoGoleador}
+
+        <small>
+            ${golesMaximoGoleador}
+            ${golesMaximoGoleador === 1 ? "gol" : "goles"}
+        </small>
+
+    `;
+
+
+    // ASISTENCIAS
+
+    tarjetas[1].querySelector("h3").innerHTML = `
+
+        ${golesFavor}
+
+        <small>
+            goles del equipo
+        </small>
+
+    `;
+
+
+    // APARICIONES
+
+    tarjetas[2].querySelector("h3").innerHTML = `
+
+        ${partidosJugados}
+
+        <small>
+            partidos jugados
+        </small>
+
+    `;
+
+
+    // ----------------------------------------------
+    // INFORMACIÓN EN CONSOLA
+    // ----------------------------------------------
+
+    console.log(
+        "===== ESTADÍSTICAS COMBINADO FC ====="
+    );
+
+    console.log(
+        "Partidos:",
+        partidosJugados
+    );
+
+    console.log(
+        "Victorias:",
+        victorias
+    );
+
+    console.log(
+        "Empates:",
+        empates
+    );
+
+    console.log(
+        "Derrotas:",
+        derrotas
+    );
+
+    console.log(
+        "Goles a favor:",
+        golesFavor
+    );
+
+    console.log(
+        "Goles en contra:",
+        golesContra
+    );
+
+    console.log(
+        "Promedio de gol:",
+        promedioGoles
+    );
+
+    console.log(
+        "Máximo goleador:",
+        maximoGoleador,
+        golesMaximoGoleador
+    );
 
 }
 
@@ -665,7 +1058,8 @@ const fotosGaleria = [
 ];
 
 
-let fotosFiltradas = [...fotosGaleria];
+let fotosFiltradas =
+    [...fotosGaleria];
 
 let fotoActual = 0;
 
@@ -687,7 +1081,8 @@ function cargarGaleria() {
 
 function mostrarFotos(categoria) {
 
-    const galeria = document.querySelector("#galeria-grid");
+    const galeria =
+        document.querySelector("#galeria-grid");
 
     if (!galeria) {
         return;
@@ -696,13 +1091,16 @@ function mostrarFotos(categoria) {
 
     if (categoria === "todos") {
 
-        fotosFiltradas = [...fotosGaleria];
+        fotosFiltradas =
+            [...fotosGaleria];
 
     } else {
 
-        fotosFiltradas = fotosGaleria.filter(
-            foto => foto.categoria === categoria
-        );
+        fotosFiltradas =
+            fotosGaleria.filter(
+                foto =>
+                    foto.categoria === categoria
+            );
 
     }
 
@@ -710,42 +1108,51 @@ function mostrarFotos(categoria) {
     galeria.innerHTML = "";
 
 
-    fotosFiltradas.forEach((foto, indice) => {
+    fotosFiltradas.forEach(
+        (foto, indice) => {
 
-        const elemento = document.createElement("div");
+            const elemento =
+                document.createElement("div");
 
-        elemento.className = "gallery-item";
-
-
-        elemento.innerHTML = `
-
-            <img
-                src="${foto.imagen}"
-                alt="${foto.titulo}"
-                loading="lazy"
-            >
-
-            <div class="gallery-overlay">
-
-                <span>
-                    ${foto.titulo}
-                </span>
-
-            </div>
-
-        `;
+            elemento.className =
+                "gallery-item";
 
 
-        elemento.addEventListener("click", () => {
+            elemento.innerHTML = `
 
-            abrirGaleria(indice);
+                <img
+                    src="${foto.imagen}"
+                    alt="${foto.titulo}"
+                    loading="lazy"
+                >
 
-        });
+                <div class="gallery-overlay">
+
+                    <span>
+                        ${foto.titulo}
+                    </span>
+
+                </div>
+
+            `;
 
 
-        galeria.appendChild(elemento);
+            elemento.addEventListener(
+                "click",
+                () => {
 
-    });
+                    abrirGaleria(indice);
+
+                }
+            );
+
+
+            galeria.appendChild(
+                elemento
+            );
+
+        }
+    );
 
 }
 
@@ -754,33 +1161,46 @@ function mostrarFotos(categoria) {
 // FILTROS DE GALERÍA
 // ======================================================
 
-document.addEventListener("click", event => {
+document.addEventListener(
+    "click",
+    event => {
 
-    const boton = event.target.closest(".gallery-filter");
+        const boton =
+            event.target.closest(
+                ".gallery-filter"
+            );
 
-    if (!boton) {
-        return;
+        if (!boton) {
+            return;
+        }
+
+
+        const categoria =
+            boton.dataset.filter;
+
+
+        document
+            .querySelectorAll(
+                ".gallery-filter"
+            )
+            .forEach(btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+        boton.classList.add(
+            "active"
+        );
+
+
+        mostrarFotos(categoria);
+
     }
-
-
-    const categoria = boton.dataset.filter;
-
-
-    document
-        .querySelectorAll(".gallery-filter")
-        .forEach(btn => {
-
-            btn.classList.remove("active");
-
-        });
-
-
-    boton.classList.add("active");
-
-
-    mostrarFotos(categoria);
-
-});
+);
 
 
 // ======================================================
@@ -797,11 +1217,20 @@ function abrirGaleria(indice) {
     fotoActual = indice;
 
 
-    const modal = document.querySelector("#gallery-modal");
+    const modal =
+        document.querySelector(
+            "#gallery-modal"
+        );
 
-    const imagen = document.querySelector("#gallery-modal-image");
+    const imagen =
+        document.querySelector(
+            "#gallery-modal-image"
+        );
 
-    const caption = document.querySelector("#gallery-modal-caption");
+    const caption =
+        document.querySelector(
+            "#gallery-modal-caption"
+        );
 
 
     if (!modal || !imagen) {
@@ -809,20 +1238,31 @@ function abrirGaleria(indice) {
     }
 
 
-    imagen.src = fotosFiltradas[fotoActual].imagen;
+    imagen.src =
+        fotosFiltradas[
+            fotoActual
+        ].imagen;
 
-    imagen.alt = fotosFiltradas[fotoActual].titulo;
+
+    imagen.alt =
+        fotosFiltradas[
+            fotoActual
+        ].titulo;
 
 
     if (caption) {
 
         caption.textContent =
-            fotosFiltradas[fotoActual].titulo;
+            fotosFiltradas[
+                fotoActual
+            ].titulo;
 
     }
 
 
-    modal.classList.add("active");
+    modal.classList.add(
+        "active"
+    );
 
 }
 
@@ -833,13 +1273,18 @@ function abrirGaleria(indice) {
 
 function cerrarGaleria() {
 
-    const modal = document.querySelector("#gallery-modal");
+    const modal =
+        document.querySelector(
+            "#gallery-modal"
+        );
 
     if (!modal) {
         return;
     }
 
-    modal.classList.remove("active");
+    modal.classList.remove(
+        "active"
+    );
 
 }
 
@@ -850,8 +1295,12 @@ function cerrarGaleria() {
 
 function fotoAnterior() {
 
-    if (fotosFiltradas.length === 0) {
+    if (
+        fotosFiltradas.length === 0
+    ) {
+
         return;
+
     }
 
 
@@ -877,15 +1326,22 @@ function fotoAnterior() {
 
 function fotoSiguiente() {
 
-    if (fotosFiltradas.length === 0) {
+    if (
+        fotosFiltradas.length === 0
+    ) {
+
         return;
+
     }
 
 
     fotoActual++;
 
 
-    if (fotoActual >= fotosFiltradas.length) {
+    if (
+        fotoActual >=
+        fotosFiltradas.length
+    ) {
 
         fotoActual = 0;
 
@@ -904,10 +1360,14 @@ function fotoSiguiente() {
 function actualizarFotoModal() {
 
     const imagen =
-        document.querySelector("#gallery-modal-image");
+        document.querySelector(
+            "#gallery-modal-image"
+        );
 
     const caption =
-        document.querySelector("#gallery-modal-caption");
+        document.querySelector(
+            "#gallery-modal-caption"
+        );
 
 
     if (!imagen) {
@@ -916,17 +1376,23 @@ function actualizarFotoModal() {
 
 
     imagen.src =
-        fotosFiltradas[fotoActual].imagen;
+        fotosFiltradas[
+            fotoActual
+        ].imagen;
 
 
     imagen.alt =
-        fotosFiltradas[fotoActual].titulo;
+        fotosFiltradas[
+            fotoActual
+        ].titulo;
 
 
     if (caption) {
 
         caption.textContent =
-            fotosFiltradas[fotoActual].titulo;
+            fotosFiltradas[
+                fotoActual
+            ].titulo;
 
     }
 
@@ -937,96 +1403,127 @@ function actualizarFotoModal() {
 // BOTONES DE GALERÍA
 // ======================================================
 
-document.addEventListener("click", event => {
+document.addEventListener(
+    "click",
+    event => {
 
-    if (event.target.closest("#gallery-modal-close")) {
+        if (
+            event.target.closest(
+                "#gallery-modal-close"
+            )
+        ) {
 
-        cerrarGaleria();
+            cerrarGaleria();
+
+        }
+
+
+        if (
+            event.target.closest(
+                "#gallery-modal-prev"
+            )
+        ) {
+
+            fotoAnterior();
+
+        }
+
+
+        if (
+            event.target.closest(
+                "#gallery-modal-next"
+            )
+        ) {
+
+            fotoSiguiente();
+
+        }
 
     }
-
-
-    if (event.target.closest("#gallery-modal-prev")) {
-
-        fotoAnterior();
-
-    }
-
-
-    if (event.target.closest("#gallery-modal-next")) {
-
-        fotoSiguiente();
-
-    }
-
-});
+);
 
 
 // ======================================================
 // CERRAR MODAL HACIENDO CLICK AFUERA
 // ======================================================
 
-document.addEventListener("click", event => {
+document.addEventListener(
+    "click",
+    event => {
 
-    const modal =
-        document.querySelector("#gallery-modal");
+        const modal =
+            document.querySelector(
+                "#gallery-modal"
+            );
 
 
-    if (!modal) {
-        return;
+        if (!modal) {
+            return;
+        }
+
+
+        if (event.target === modal) {
+
+            cerrarGaleria();
+
+        }
+
     }
-
-
-    if (event.target === modal) {
-
-        cerrarGaleria();
-
-    }
-
-});
+);
 
 
 // ======================================================
 // TECLADO
 // ======================================================
 
-document.addEventListener("keydown", event => {
+document.addEventListener(
+    "keydown",
+    event => {
 
-    const modal =
-        document.querySelector("#gallery-modal");
+        const modal =
+            document.querySelector(
+                "#gallery-modal"
+            );
 
 
-    if (
-        !modal ||
-        !modal.classList.contains("active")
-    ) {
+        if (
+            !modal ||
+            !modal.classList.contains(
+                "active"
+            )
+        ) {
 
-        return;
+            return;
+
+        }
+
+
+        if (event.key === "Escape") {
+
+            cerrarGaleria();
+
+        }
+
+
+        if (
+            event.key === "ArrowLeft"
+        ) {
+
+            fotoAnterior();
+
+        }
+
+
+        if (
+            event.key === "ArrowRight"
+        ) {
+
+            fotoSiguiente();
+
+        }
 
     }
-
-
-    if (event.key === "Escape") {
-
-        cerrarGaleria();
-
-    }
-
-
-    if (event.key === "ArrowLeft") {
-
-        fotoAnterior();
-
-    }
-
-
-    if (event.key === "ArrowRight") {
-
-        fotoSiguiente();
-
-    }
-
-});
+);
 
 
 // ======================================================
@@ -1036,7 +1533,9 @@ document.addEventListener("keydown", event => {
 function actualizarAnio() {
 
     const elemento =
-        document.querySelector("#current-year");
+        document.querySelector(
+            "#current-year"
+        );
 
 
     if (elemento) {
@@ -1056,10 +1555,14 @@ function actualizarAnio() {
 function configurarMenu() {
 
     const boton =
-        document.querySelector(".navbar-toggler");
+        document.querySelector(
+            ".navbar-toggler"
+        );
 
     const menu =
-        document.querySelector(".navbar-collapse");
+        document.querySelector(
+            ".navbar-collapse"
+        );
 
 
     if (!boton || !menu) {
@@ -1068,18 +1571,27 @@ function configurarMenu() {
 
 
     document
-        .querySelectorAll(".navbar-nav .nav-link")
+        .querySelectorAll(
+            ".navbar-nav .nav-link"
+        )
         .forEach(link => {
 
-            link.addEventListener("click", () => {
+            link.addEventListener(
+                "click",
+                () => {
 
-                if (menu.classList.contains("show")) {
+                    if (
+                        menu.classList.contains(
+                            "show"
+                        )
+                    ) {
 
-                    boton.click();
+                        boton.click();
+
+                    }
 
                 }
-
-            });
+            );
 
         });
 

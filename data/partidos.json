@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "rival": "Los de Siempre",
+    "rival": "Los de siempre",
     "fecha": "Fecha 1",
     "hora": "22:00",
     "condicion": "Local",
@@ -12,7 +12,7 @@
   },
   {
     "id": 2,
-    "rival": "Royal",
+    "rival": "Royal fc",
     "fecha": "Fecha 2",
     "hora": "21:00",
     "condicion": "Visitante",
@@ -20,16 +20,6 @@
     "golesFavor": 1,
     "golesRival": 2,
     "goleadores": ["Eduardo (1)"]
-  },
-  {
-    "id": 3,
-    "rival": "Team Fortu",
-    "fecha": "Fecha 3",
-    "hora": "18:00",
-    "condicion": "Local",
-    "estado": "pendiente",
-    "golesFavor": null,
-    "golesRival": null,
-    "goleadores": []
   }
+
 ]

@@ -94,11 +94,9 @@ function mostrarJugadores() {
         return;
     }
 
-
     if (todosLosJugadores.length === 0) {
 
         contenedor.innerHTML = `
-
             <div class="col-12">
 
                 <p class="empty-message">
@@ -106,81 +104,340 @@ function mostrarJugadores() {
                 </p>
 
             </div>
-
         `;
 
         return;
-
     }
 
 
+    // ==================================================
+    // CALCULAR ESTADÍSTICAS INDIVIDUALES
+    // ==================================================
+
+    const estadisticasJugadores = {};
+
+
+    // Crear estadísticas para todos
+    // los jugadores
+
+    todosLosJugadores.forEach(jugador => {
+
+        estadisticasJugadores[jugador.nombre] = {
+
+            goles: 0,
+            asistencias: 0,
+            partidos: 0,
+            amarillas: 0,
+            rojas: 0
+
+        };
+
+    });
+
+
+    // ==================================================
+    // RECORRER PARTIDOS
+    // ==================================================
+
+    todosLosPartidos
+        .filter(
+            partido =>
+                partido.estado === "finalizado"
+        )
+        .forEach(partido => {
+
+
+            // ==========================================
+            // GOLES
+            // ==========================================
+
+            if (
+                Array.isArray(
+                    partido.goleadores
+                )
+            ) {
+
+                partido.goleadores.forEach(
+                    goleador => {
+
+                        const nombre =
+                            goleador.jugador;
+
+                        if (
+                            estadisticasJugadores[nombre]
+                        ) {
+
+                            estadisticasJugadores[
+                                nombre
+                            ].goles +=
+                                Number(
+                                    goleador.goles
+                                ) || 0;
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            // ==========================================
+            // ASISTENCIAS
+            // ==========================================
+
+            if (
+                Array.isArray(
+                    partido.asistencias
+                )
+            ) {
+
+                partido.asistencias.forEach(
+                    asistente => {
+
+                        const nombre =
+                            asistente.jugador;
+
+                        if (
+                            estadisticasJugadores[nombre]
+                        ) {
+
+                            estadisticasJugadores[
+                                nombre
+                            ].asistencias +=
+                                Number(
+                                    asistente.asistencias
+                                ) || 0;
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            // ==========================================
+            // AMARILLAS
+            // ==========================================
+
+            if (
+                Array.isArray(
+                    partido.amarillas
+                )
+            ) {
+
+                partido.amarillas.forEach(
+                    tarjeta => {
+
+                        const nombre =
+                            tarjeta.jugador;
+
+                        if (
+                            estadisticasJugadores[nombre]
+                        ) {
+
+                            estadisticasJugadores[
+                                nombre
+                            ].amarillas +=
+                                Number(
+                                    tarjeta.amarillas
+                                ) || 0;
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            // ==========================================
+            // ROJAS
+            // ==========================================
+
+            if (
+                Array.isArray(
+                    partido.rojas
+                )
+            ) {
+
+                partido.rojas.forEach(
+                    tarjeta => {
+
+                        const nombre =
+                            tarjeta.jugador;
+
+                        if (
+                            estadisticasJugadores[nombre]
+                        ) {
+
+                            estadisticasJugadores[
+                                nombre
+                            ].rojas +=
+                                Number(
+                                    tarjeta.rojas
+                                ) || 0;
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            // ==========================================
+            // PARTIDOS JUGADOS
+            // ==========================================
+
+            /*
+             * Por ahora no podemos calcular
+             * partidos jugados individualmente
+             * porque todavía no estamos registrando
+             * quiénes jugaron cada partido.
+             *
+             * Lo vamos a agregar después.
+             */
+
+        });
+
+
+    // ==================================================
+    // MOSTRAR JUGADORES
+    // ==================================================
+
     contenedor.innerHTML =
-        todosLosJugadores.map(jugador => {
+        todosLosJugadores
+            .map(jugador => {
 
-            const foto =
-                jugador.foto &&
-                jugador.foto.trim() !== ""
+                const estadisticas =
+                    estadisticasJugadores[
+                        jugador.nombre
+                    ] || {
 
-                    ? jugador.foto
+                        goles: 0,
+                        asistencias: 0,
+                        partidos: 0,
+                        amarillas: 0,
+                        rojas: 0
 
-                    : "img/jugadores/default.jpg";
+                    };
 
 
-            return `
+                const foto =
+                    jugador.foto &&
+                    jugador.foto.trim() !== ""
 
-                <div class="col-sm-6 col-lg-4">
+                        ? jugador.foto
 
-                    <div class="player-card">
+                        : "img/jugadores/default.jpg";
 
-                        <div class="player-image">
 
-                            <img
-                                src="${foto}"
-                                alt="${jugador.nombre}"
-                                loading="lazy"
-                                onerror="this.src='img/jugadores/default.jpg'"
-                            >
+                return `
 
-                        </div>
+                    <div class="col-sm-6 col-lg-4">
 
-                        <div class="player-info">
+                        <div class="player-card">
 
-                            ${
-                                jugador.numero
-                                    ? `
-                                        <span class="player-number">
-                                            #${jugador.numero}
-                                        </span>
-                                      `
-                                    : ""
-                            }
 
-                            <h3>
-                                ${jugador.nombre}
-                            </h3>
+                            <div class="player-image">
 
-                            ${
-                                jugador.posicion
-                                    ? `
-                                        <span class="player-position">
-                                            ${jugador.posicion}
-                                        </span>
-                                      `
-                                    : ""
-                            }
+                                <img
+                                    src="${foto}"
+                                    alt="${jugador.nombre}"
+                                    loading="lazy"
+                                    onerror="
+                                        this.src='img/jugadores/default.jpg'
+                                    "
+                                >
+
+                            </div>
+
+
+                            <div class="player-info">
+
+
+                                ${
+                                    jugador.numero
+                                        ? `
+                                            <span class="player-number">
+                                                #${jugador.numero}
+                                            </span>
+                                          `
+                                        : ""
+                                }
+
+
+                                <h3>
+                                    ${jugador.nombre}
+                                </h3>
+
+
+                                ${
+                                    jugador.posicion
+                                        ? `
+                                            <span class="player-position">
+                                                ${jugador.posicion}
+                                            </span>
+                                          `
+                                        : ""
+                                }
+
+
+                                <div class="player-stats">
+
+                                    <div>
+                                        <strong>
+                                            ⚽
+                                            ${estadisticas.goles}
+                                        </strong>
+
+                                        <small>
+                                            Goles
+                                        </small>
+                                    </div>
+
+
+                                    <div>
+                                        <strong>
+                                            🎯
+                                            ${estadisticas.asistencias}
+                                        </strong>
+
+                                        <small>
+                                            Asistencias
+                                        </small>
+                                    </div>
+
+
+                                    <div>
+                                        <strong>
+                                            👕
+                                            ${estadisticas.partidos}
+                                        </strong>
+
+                                        <small>
+                                            Partidos
+                                        </small>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                `;
 
-            `;
-
-        }).join("");
+            })
+            .join("");
 
 }
-
 
 // ======================================================
 // PARTIDOS

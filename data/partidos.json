@@ -8,7 +8,10 @@
     "estado": "finalizado",
     "golesFavor": 3,
     "golesRival": 1,
-    "goleadores": ["Kevin Lopez (2)", "Matias Sorini (1)"]
+    "goleadores": [
+      "Kevin Lopez (2)",
+      "Matias Sorini (1)"
+    ]
   },
   {
     "id": 2,
@@ -19,7 +22,23 @@
     "estado": "finalizado",
     "golesFavor": 1,
     "golesRival": 2,
-    "goleadores": ["Eduardo (1)"]
+    "goleadores": [
+      "Eduardo (1)"
+    ]
+  },
+  {
+    "id": 3,
+    "rival": "The borbotones. Fc",
+    "fecha": "Fecha 3",
+    "hora": "22:00",
+    "condicion": "Local",
+    "estado": "finalizado",
+    "golesFavor": 4,
+    "golesRival": 4,
+    "goleadores": [
+      "Alan Paz (2)",
+      "Esteban Jiménez (1)",
+      "Ricardo Farias (1)"
+    ]
   }
-
 ]

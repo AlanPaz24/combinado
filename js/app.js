@@ -27,11 +27,11 @@ async function cargarTodo() {
   }
 }
 
-// 1. Calcula la Tabla de Posiciones Automáticamente
+// 1. Calcula la Tabla de Posiciones General del Torneo
 function calcularYRenderizarTabla(partidos, equipos) {
   const tablaMap = {};
 
-  // Cargar equipos base desde equipos.json
+  // Inicializar todos los equipos de la copa
   equipos.forEach(eq => {
     tablaMap[eq.nombre] = {
       nombre: eq.nombre,
@@ -41,33 +41,44 @@ function calcularYRenderizarTabla(partidos, equipos) {
   });
 
   partidos.filter(p => p.estado === 'finalizado').forEach(p => {
-    const miEq = "Combinado";
-    const rival = p.rival;
+    let eqLocal, eqVisitante, gfLocal, gfVisitante;
 
-    if (!tablaMap[rival]) {
-      tablaMap[rival] = { nombre: rival, esMiEquipo: false, pts: 0, pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, dif: 0 };
+    // Detectar si el partido es formato "Combinado vs Rival" o "Local vs Visitante"
+    if (p.equipoLocal && p.equipoVisitante) {
+      eqLocal = p.equipoLocal;
+      eqVisitante = p.equipoVisitante;
+      gfLocal = p.golesLocal || 0;
+      gfVisitante = p.golesVisitante || 0;
+    } else {
+      eqLocal = "Combinado";
+      eqVisitante = p.rival;
+      gfLocal = p.golesFavor || 0;
+      gfVisitante = p.golesRival || 0;
     }
 
-    const gfMi = p.golesFavor;
-    const gfRival = p.golesRival;
+    // Asegurar que existan en la tabla si no estuvieran creados
+    if (!tablaMap[eqLocal]) tablaMap[eqLocal] = { nombre: eqLocal, esMiEquipo: false, pts: 0, pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, dif: 0 };
+    if (!tablaMap[eqVisitante]) tablaMap[eqVisitante] = { nombre: eqVisitante, esMiEquipo: false, pts: 0, pj: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, dif: 0 };
 
-    tablaMap[miEq].pj++;
-    tablaMap[miEq].gf += gfMi;
-    tablaMap[miEq].gc += gfRival;
+    // Partidos Jugados y Goles
+    tablaMap[eqLocal].pj++;
+    tablaMap[eqLocal].gf += gfLocal;
+    tablaMap[eqLocal].gc += gfVisitante;
 
-    tablaMap[rival].pj++;
-    tablaMap[rival].gf += gfRival;
-    tablaMap[rival].gc += gfMi;
+    tablaMap[eqVisitante].pj++;
+    tablaMap[eqVisitante].gf += gfVisitante;
+    tablaMap[eqVisitante].gc += gfLocal;
 
-    if (gfMi > gfRival) {
-      tablaMap[miEq].pts += 3; tablaMap[miEq].pg++;
-      tablaMap[rival].pp++;
-    } else if (gfMi < gfRival) {
-      tablaMap[rival].pts += 3; tablaMap[rival].pg++;
-      tablaMap[miEq].pp++;
+    // Puntos y Resultados
+    if (gfLocal > gfVisitante) {
+      tablaMap[eqLocal].pts += 3; tablaMap[eqLocal].pg++;
+      tablaMap[eqVisitante].pp++;
+    } else if (gfLocal < gfVisitante) {
+      tablaMap[eqVisitante].pts += 3; tablaMap[eqVisitante].pg++;
+      tablaMap[eqLocal].pp++;
     } else {
-      tablaMap[miEq].pts += 1; tablaMap[miEq].pe++;
-      tablaMap[rival].pts += 1; tablaMap[rival].pe++;
+      tablaMap[eqLocal].pts += 1; tablaMap[eqLocal].pe++;
+      tablaMap[eqVisitante].pts += 1; tablaMap[eqVisitante].pe++;
     }
   });
 
@@ -76,6 +87,7 @@ function calcularYRenderizarTabla(partidos, equipos) {
     return eq;
   });
 
+  // Ordenar por Puntos > Diferencia de Gol > Goles a Favor
   tablaArray.sort((a, b) => b.pts - a.pts || b.dif - a.dif || b.gf - a.gf);
 
   const tbody = document.getElementById('tabla-posiciones-body');
@@ -97,7 +109,7 @@ function calcularYRenderizarTabla(partidos, equipos) {
   `).join('');
 }
 
-// 2. Renderizar Jugadores en Cartas Grandes
+// 2. Renderizar Jugadores en Cartas
 function renderizarJugadores(jugadores) {
   const contenedor = document.getElementById('contenedor-jugadores');
   if (!contenedor) return;
@@ -153,27 +165,41 @@ function renderizarLideres(jugadores) {
   }
 }
 
-// 4. Renderizar Partidos
+// 4. Renderizar Partidos en la Sección del Equipo
 function renderizarPartidos(partidos) {
   const contenedor = document.getElementById('contenedor-partidos');
   if (!contenedor) return;
 
-  contenedor.innerHTML = partidos.map(p => `
-    <div class="card-partido">
-      <div class="partido-info">
-        <span>📅 ${p.fecha} - ${p.hora} hs</span>
-        <span>📍 ${p.condicion}</span>
+  // Filtrar solo los partidos donde juegue Combinado para el fixture propio
+  const partidosCombinado = partidos.filter(p => 
+    (!p.equipoLocal && !p.equipoVisitante) || 
+    p.equipoLocal === "Combinado" || 
+    p.equipoVisitante === "Combinado"
+  );
+
+  contenedor.innerHTML = partidosCombinado.map(p => {
+    const esLocal = p.equipoLocal ? (p.equipoLocal === "Combinado") : true;
+    const rival = p.equipoLocal ? (esLocal ? p.equipoVisitante : p.equipoLocal) : p.rival;
+    const gf = p.equipoLocal ? (esLocal ? p.golesLocal : p.golesVisitante) : p.golesFavor;
+    const gr = p.equipoLocal ? (esLocal ? p.golesVisitante : p.golesLocal) : p.golesRival;
+
+    return `
+      <div class="card-partido">
+        <div class="partido-info">
+          <span>📅 ${p.fecha} ${p.hora ? `- ${p.hora} hs` : ''}</span>
+          <span>📍 ${p.condicion || (esLocal ? 'Local' : 'Visitante')}</span>
+        </div>
+        <div class="partido-resultado">
+          <div class="equipo">Combinado</div>
+          <div class="score">${p.estado === 'finalizado' ? `${gf} -${gr}` : 'VS'}</div>
+          <div class="equipo rival">${rival}</div>
+        </div>
+        ${p.goleadores && p.goleadores.length > 0 ? `
+          <div class="partido-goleadores">⚽ Goles: ${p.goleadores.join(', ')}</div>
+        ` : ''}
       </div>
-      <div class="partido-resultado">
-        <div class="equipo">Combinado</div>
-        <div class="score">${p.estado === 'finalizado' ? `${p.golesFavor} -${p.golesRival}` : 'VS'}</div>
-        <div class="equipo rival">${p.rival}</div>
-      </div>
-      ${p.goleadores && p.goleadores.length > 0 ? `
-        <div class="partido-goleadores">⚽ Goles: ${p.goleadores.join(', ')}</div>
-      ` : ''}
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 // 5. Filtros y Modal

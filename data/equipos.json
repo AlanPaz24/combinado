@@ -1,5 +1,5 @@
 [
-  { "nombre": "Combinado FC", "esMiEquipo": true },
+  { "nombre": "Combinado", "esMiEquipo": true },
   { "nombre": "Los perros", "esMiEquipo": false },
   { "nombre": "Los pibes de la barber.", "esMiEquipo": false },
   { "nombre": "Royal fc", "esMiEquipo": false },

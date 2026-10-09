@@ -22,11 +22,44 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function cargarSelectEquipos() {
-  const select = document.getElementById('partido-rival');
-  select.innerHTML = listaEquipos
-    .filter(eq => !eq.esMiEquipo)
+  const selectLocal = document.getElementById('partido-local');
+  const selectVisitante = document.getElementById('partido-visitante');
+  
+  const opciones = listaEquipos
     .map(eq => `<option value="${eq.nombre}">${eq.nombre}</option>`)
     .join('');
+
+  if(selectLocal) selectLocal.innerHTML = opciones;
+  if(selectVisitante) selectVisitante.innerHTML = opciones;
+}
+
+function agregarPartido() {
+  const local = document.getElementById('partido-local').value;
+  const visitante = document.getElementById('partido-visitante').value;
+  const fecha = document.getElementById('partido-fecha').value;
+  const estado = document.getElementById('partido-estado').value;
+  const gl = parseInt(document.getElementById('goles-local').value) || 0;
+  const gv = parseInt(document.getElementById('goles-visitante').value) || 0;
+  const golStr = document.getElementById('partido-goleadores').value;
+
+  if (local === visitante) {
+    alert("El equipo local y visitante no pueden ser el mismo.");
+    return;
+  }
+
+  const nuevoPartido = {
+    id: listaPartidos.length + 1,
+    equipoLocal: local,
+    equipoVisitante: visitante,
+    fecha: fecha,
+    estado: estado,
+    golesLocal: estado === 'finalizado' ? gl : null,
+    golesVisitante: estado === 'finalizado' ? gv : null,
+    goleadores: golStr ? golStr.split(',').map(s => s.trim()) : []
+  };
+
+  listaPartidos.push(nuevoPartido);
+  alert(`Partido ${local} vs ${visitante} agregado con éxito.`);
 }
 
 function renderizarTablaJugadores() {

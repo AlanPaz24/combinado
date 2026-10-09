@@ -31,6 +31,7 @@ async function cargarTodo() {
 function calcularYRenderizarTabla(partidos, equipos) {
   const tablaMap = {};
 
+  // Cargar equipos base desde equipos.json
   equipos.forEach(eq => {
     tablaMap[eq.nombre] = {
       nombre: eq.nombre,
@@ -40,7 +41,7 @@ function calcularYRenderizarTabla(partidos, equipos) {
   });
 
   partidos.filter(p => p.estado === 'finalizado').forEach(p => {
-    const miEq = "Combinado FC";
+    const miEq = "Combinado";
     const rival = p.rival;
 
     if (!tablaMap[rival]) {
@@ -96,24 +97,26 @@ function calcularYRenderizarTabla(partidos, equipos) {
   `).join('');
 }
 
-// 2. Renderizar Jugadores
+// 2. Renderizar Jugadores en Cartas Grandes
 function renderizarJugadores(jugadores) {
   const contenedor = document.getElementById('contenedor-jugadores');
   if (!contenedor) return;
 
   contenedor.innerHTML = jugadores.map(j => `
     <div class="card-jugador" onclick="abrirModal(${j.id})">
-      <div class="dorsal">#${j.numero}</div>
-      <div class="foto-contenedor">
-        <img src="${j.foto}" alt="${j.nombre}" class="foto-jugador" onerror="this.src='https://via.placeholder.com/150'">
+      <div class="badge-jugador">
+        <span class="dorsal">#${j.numero}</span>
+        <span class="posicion-badge">${j.posicion}</span>
+      </div>
+      <div class="foto-contenedor-grande">
+        <img src="${j.foto || 'assets/jugadores/default.jpg'}" alt="${j.nombre}" class="foto-jugador-grande" onerror="this.src='https://via.placeholder.com/300x350/0b532c/fbc02d?text=${encodeURIComponent(j.nombre)}'">
       </div>
       <h3>${j.nombre}</h3>
-      <span class="posicion">${j.posicion}</span>
-      <div class="stats-grid">
-        <div class="stat-item"><span class="stat-valor">${j.partidos || 0}</span><span class="stat-label">PJ</span></div>
-        <div class="stat-item"><span class="stat-valor">${j.goles || 0}</span><span class="stat-label">Goles</span></div>
-        <div class="stat-item"><span class="stat-valor">${j.asistencias || 0}</span><span class="stat-label">Asist.</span></div>
-        <div class="stat-item"><span class="stat-valor">🟨 ${j.amarillas || 0}</span><span class="stat-label">Tarjetas</span></div>
+      <div class="stats-grid-fiba">
+        <div class="stat-box-fiba"><span class="val">${j.partidos || 0}</span><span class="lbl">PJ</span></div>
+        <div class="stat-box-fiba"><span class="val">${j.goles || 0}</span><span class="lbl">GOL</span></div>
+        <div class="stat-box-fiba"><span class="val">${j.asistencias || 0}</span><span class="lbl">AST</span></div>
+        <div class="stat-box-fiba"><span class="val">🟨${j.amarillas || 0}</span><span class="lbl">TAR</span></div>
       </div>
     </div>
   `).join('');
@@ -162,7 +165,7 @@ function renderizarPartidos(partidos) {
         <span>📍 ${p.condicion}</span>
       </div>
       <div class="partido-resultado">
-        <div class="equipo">Combinado FC</div>
+        <div class="equipo">Combinado</div>
         <div class="score">${p.estado === 'finalizado' ? `${p.golesFavor} -${p.golesRival}` : 'VS'}</div>
         <div class="equipo rival">${p.rival}</div>
       </div>
@@ -187,7 +190,7 @@ function configurarFiltros() {
       } else {
         const filtrados = listaJugadores.filter(j => 
           j.posicion.toLowerCase().includes(pos.toLowerCase()) || 
-          (pos === 'Mediocampista' && j.posicion === 'Medio Campista')
+          (pos === 'Mediocampista' && j.posicion.toLowerCase().includes('medio'))
         );
         renderizarJugadores(filtrados);
       }
@@ -204,12 +207,12 @@ function abrirModal(id) {
   body.innerHTML = `
     <div style="text-align:center;">
       <h2 style="border:none; padding:0; margin-bottom:5px;">${j.nombre}</h2>
-      <span class="posicion">${j.posicion} - #${j.numero}</span>
-      <div class="stats-grid" style="margin-top:20px;">
-        <div class="stat-item"><span class="stat-valor">${j.partidos || 0}</span><span class="stat-label">Partidos</span></div>
-        <div class="stat-item"><span class="stat-valor">${j.goles || 0}</span><span class="stat-label">Goles</span></div>
-        <div class="stat-item"><span class="stat-valor">${j.asistencias || 0}</span><span class="stat-label">Asistencias</span></div>
-        <div class="stat-item"><span class="stat-valor">🟨 ${j.amarillas || 0} / 🟥 ${j.rojas || 0}</span><span class="stat-label">Tarjetas</span></div>
+      <span class="posicion-badge" style="display:inline-block; margin-bottom:15px;">${j.posicion} - #${j.numero}</span>
+      <div class="stats-grid-fiba" style="margin-top:15px;">
+        <div class="stat-box-fiba"><span class="val">${j.partidos || 0}</span><span class="lbl">Partidos</span></div>
+        <div class="stat-box-fiba"><span class="val">${j.goles || 0}</span><span class="lbl">Goles</span></div>
+        <div class="stat-box-fiba"><span class="val">${j.asistencias || 0}</span><span class="lbl">Asistencias</span></div>
+        <div class="stat-box-fiba"><span class="val">🟨${j.amarillas || 0} / 🟥${j.rojas || 0}</span><span class="lbl">Tarjetas</span></div>
       </div>
     </div>
   `;

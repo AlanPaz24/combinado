@@ -145,98 +145,126 @@ h2 {
   font-weight: bold;
 }
 
-/* Grid Jugadores */
+/* Grid de Jugadores más amplio para resaltar la carta */
 .grid-jugadores {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 28px;
 }
 
+/* Carta Estilo FUT / Panini (Fotos Grandes) */
 .card-jugador {
-  background: linear-gradient(145deg, #0e2617, #0a1b10);
-  border: 1px solid #1b472a;
-  border-top: 4px solid #fbc02d;
-  border-radius: 12px;
-  padding: 18px;
+  background: linear-gradient(145deg, #0e2918, #07150c);
+  border: 2px solid #fbc02d;
+  border-radius: 16px;
+  padding: 15px;
   text-align: center;
   position: relative;
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
 .card-jugador:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 22px rgba(251, 192, 45, 0.25);
-  border-color: #fbc02d;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(251, 192, 45, 0.35);
+}
+
+/* Insignia con Dorsal y Posición */
+.badge-jugador {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
 }
 
 .card-jugador .dorsal {
-  position: absolute;
-  top: 12px;
-  left: 15px;
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   font-weight: 900;
   color: #fbc02d;
+  line-height: 1;
 }
 
-.foto-contenedor {
-  width: 95px;
-  height: 95px;
-  margin: 10px auto 12px;
-  border-radius: 50%;
-  border: 3px solid #fbc02d;
+.card-jugador .posicion-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffffff;
+  background-color: #0b532c;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-top: 4px;
+  text-transform: uppercase;
+  border: 1px solid #fbc02d;
+}
+
+/* Foto de Jugador Grande */
+.foto-contenedor-grande {
+  width: 100%;
+  height: 220px;
+  margin: 10px 0;
+  border-radius: 12px;
   overflow: hidden;
-  background-color: #08130c;
+  background: radial-gradient(circle, #134226 0%, #08130c 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #1c5232;
 }
 
-.foto-jugador {
+.foto-jugador-grande {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
+  transition: transform 0.3s ease;
 }
 
+.card-jugador:hover .foto-jugador-grande {
+  transform: scale(1.05);
+}
+
+/* Nombre del Jugador */
 .card-jugador h3 {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  font-weight: 900;
   color: #ffffff;
-  margin-bottom: 4px;
-}
-
-.posicion {
-  display: inline-block;
-  background-color: rgba(251, 192, 45, 0.15);
-  color: #fbc02d;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 12px;
-  margin-bottom: 12px;
+  margin: 10px 0 12px 0;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-.stats-grid {
+/* Rejilla de Stats en la base de la carta */
+.stats-grid-fiba {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  background: #07120a;
-  padding: 10px;
-  border-radius: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  background: rgba(5, 15, 9, 0.85);
+  padding: 10px 5px;
+  border-radius: 10px;
+  border: 1px solid #1c5232;
 }
 
-.stat-item {
+.stat-box-fiba {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.stat-valor {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #ffffff;
+.stat-box-fiba .val {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #fbc02d;
 }
 
-.stat-label {
-  font-size: 0.68rem;
-  color: #88a391;
+.stat-box-fiba .lbl {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #a3b8aa;
   text-transform: uppercase;
 }
 

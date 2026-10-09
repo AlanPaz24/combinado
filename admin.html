@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combinado FC - Panel Admin</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .admin-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #0f2918;
+      border: 2px solid #fbc02d;
+      border-radius: 12px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-weight: 700;
+      color: #fbc02d;
+      font-size: 0.9rem;
+    }
+    .form-control {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #1b472a;
+      background: #08130c;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .btn-admin {
+      background: #fbc02d;
+      color: #08130c;
+      border: none;
+      padding: 12px 20px;
+      font-weight: 800;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+    .btn-admin:hover {
+      background: #d4a017;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .admin-table th, .admin-table td {
+      padding: 8px;
+      border: 1px solid #1b472a;
+      text-align: center;
+    }
+    .admin-table input {
+      width: 60px;
+      text-align: center;
+      padding: 4px;
+      background: #08130c;
+      border: 1px solid #1b472a;
+      color: #fff;
+      border-radius: 4px;
+    }
+    textarea.json-output {
+      width: 100%;
+      height: 180px;
+      background: #050c07;
+      color: #a3e635;
+      font-family: monospace;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #1b472a;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo-container">
+      <div class="logo">COMBINADO <span>ADMIN</span></div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Volver a la Web</a>
+    </nav>
+  </header>
+
+  <div class="admin-container">
+    <h2>⚙️ Cargar Nuevo Partido / Resultado</h2>
+    
+    <form id="form-partido">
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Rival (Copa Chamigo)</label>
+          <select id="partido-rival" class="form-control" required></select>
+        </div>
+        <div class="form-group">
+          <label>Fecha del Torneo (ej: Fecha 3)</label>
+          <input type="text" id="partido-fecha" class="form-control" placeholder="Fecha 3" required>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Hora</label>
+          <input type="text" id="partido-hora" class="form-control" value="16:00 hs">
+        </div>
+        <div class="form-group">
+          <label>Estado</label>
+          <select id="partido-estado" class="form-control">
+            <option value="finalizado">Finalizado</option>
+            <option value="pendiente">Pendiente</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Goles Combinado</label>
+          <input type="number" id="goles-favor" class="form-control" value="0">
+        </div>
+        <div class="form-group">
+          <label>Goles Rival</label>
+          <input type="number" id="goles-rival" class="form-control" value="0">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Goleadores (separados por coma, ej: Alan Paz (2), Diego Sequeira (1))</label>
+        <input type="text" id="partido-goleadores" class="form-control" placeholder="Alan Paz (1)">
+      </div>
+
+      <button type="button" class="btn-admin" onclick="agregarPartido()">➕ Agregar Partido a la Lista</button>
+    </form>
+
+    <hr style="border-color:#1b472a; margin:30px 0;">
+
+    <h2>🏃‍♂️ Editar Estadísticas de Jugadores</h2>
+    <div style="overflow-x:auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>PJ</th>
+            <th>Goles</th>
+            <th>Asist</th>
+            <th>Amarillas</th>
+            <th>Rojas</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-admin-jugadores"></tbody>
+      </table>
+    </div>
+
+    <button type="button" class="btn-admin" style="width:100%; margin-top:25px;" onclick="generarJSONs()">💾 Generar Archivos JSON para GitHub</button>
+
+    <div id="seccion-resultados" style="display:none; margin-top:30px;">
+      <h3>📄 Copia esto en `data/partidos.json`:</h3>
+      <textarea id="json-partidos-out" class="json-output" readonly></textarea>
+      
+      <h3 style="margin-top:20px;">📄 Copia esto en `data/jugadores.json`:</h3>
+      <textarea id="json-jugadores-out" class="json-output" readonly></textarea>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

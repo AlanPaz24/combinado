@@ -6,5 +6,25 @@
       { "equipo": "The borbotones",      "pg": 2, "pe": 1, "pp": 1, "gf": 9,  "gc": 7 },
       { "equipo": "Los de siempre", "pg": 1, "pe": 0, "pp": 3, "gf": 4,  "gc": 12 }
     ]
-  }
+  },
+  { 
+    "fecha": "2026-10-20", 
+    "hora": "20:30", "rival": "The borbotones", 
+    "lugar": "Cancha 1", 
+    "torneo": "Copa Chamigo 2026", 
+    "estado": "jugado" ,
+    "golesFavor": 4, 
+    "golesContra": 4,
+    "goleadores": "Alan Paz (2), Diego Sequeira"
+    },
+
+      {   
+        "fecha": "2026-10-15", 
+        "hora": "20:30", 
+        "rival": "Osseg A", 
+        "lugar": "Cancha 1", 
+        "torneo": "Copa Chamigo 2026", 
+        "estado": "proximo" 
+    }
+
 ]

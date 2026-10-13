@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Partidos — Combinado FC</title>
+  <meta name="description" content="Resultados, próximos partidos y tabla de posiciones de Combinado FC.">
+  <meta name="theme-color" content="#0a0d0b">
+  <link rel="icon" href="img/logo/escudo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body data-pagina="partidos">
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main>
+    <section class="banner">
+      <div class="contenedor">
+        <span>Fecha a fecha</span>
+        <h1>Partidos</h1>
+        <p>Resultados, próximos encuentros y tabla de posiciones.</p>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor">
+
+        <!-- Selector de torneo + racha -->
+        <div class="barra-torneo">
+          <div>
+            <label for="selector-torneo">Torneo</label><br>
+            <select id="selector-torneo"></select>
+          </div>
+          <div class="racha" id="racha"></div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats" id="stats"></div>
+
+        <!-- Próximos partidos -->
+        <div id="bloque-proximos" hidden>
+          <h2 class="subtitulo">Próximos partidos</h2>
+          <div class="lista-partidos" id="lista-proximos"></div>
+        </div>
+
+        <!-- Tabla de posiciones -->
+        <div id="bloque-tabla" hidden>
+          <h2 class="subtitulo">Tabla de posiciones</h2>
+          <div class="tabla-wrap">
+            <table class="tabla">
+              <thead>
+                <tr>
+                  <th>#</th><th class="izq">Equipo</th><th>PJ</th><th>PG</th><th>PE</th>
+                  <th>PP</th><th>GF</th><th>GC</th><th>DG</th><th>Pts</th>
+                </tr>
+              </thead>
+              <tbody id="cuerpo-tabla"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Resultados -->
+        <h2 class="subtitulo">Resultados</h2>
+        <div class="lista-partidos" id="lista-resultados"></div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+  <script src="js/comun.js" defer></script>
+  <script src="js/partidos.js" defer></script>
+</body>
+</html>

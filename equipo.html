@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Equipo — Combinado FC</title>
+  <meta name="description" content="Plantel completo de Combinado FC: jugadores, posiciones y estadísticas.">
+  <meta name="theme-color" content="#0a0d0b">
+  <link rel="icon" href="img/logo/escudo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body data-pagina="equipo">
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main>
+    <section class="banner">
+      <div class="contenedor">
+        <span>Los protagonistas</span>
+        <h1>Plantel</h1>
+        <p>Los que se ponen la verde y negra y dejan todo en la cancha.</p>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="filtros" id="filtros"></div>
+        <div class="grid-jugadores" id="plantel"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Ventana emergente con la ficha -->
+  <dialog class="ficha" id="ficha"></dialog>
+
+  <footer class="pie" id="pie"></footer>
+
+  <script src="js/comun.js" defer></script>
+  <script src="js/equipo.js" defer></script>
+</body>
+</html>

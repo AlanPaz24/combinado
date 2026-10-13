@@ -1,12 +1,10 @@
 [
-  { "fecha": "2025-08-07", "rival": "Galicia A",          "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-08-14", "rival": "Osseg C",            "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-08-21", "rival": "Sancor Seguros A",   "golesFavor": 3,  "golesContra": 0, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-08-28", "rival": "Mercantil Andina",   "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-09-02", "rival": "Meridional Seguros", "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-09-11", "rival": "Osseg B",            "golesFavor": 5,  "golesContra": 5, "penales": "4-3", "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-09-18", "rival": "Osseg A",            "golesFavor": 0,  "golesContra": 4, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-09-25", "rival": "San Patricio",       "golesFavor": 1,  "golesContra": 5, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
-  { "fecha": "2025-09-29", "rival": "Rejunte",            "golesFavor": 10, "golesContra": 5, "torneo": "Amistoso 2025", "estado": "jugado" },
-  { "fecha": "2025-10-06", "hora": "19:00", "rival": "The Malin Head", "lugar": "Sindicato del Seguro", "torneo": "Copa Desafío", "estado": "proximo" }
+  {
+    "torneo": "Torneo Apertura 2026",
+    "equipos": [
+      { "equipo": "Combinado FC", "pg": 3, "pe": 1, "pp": 0, "gf": 14, "gc": 5 },
+      { "equipo": "Osseg A",      "pg": 2, "pe": 1, "pp": 1, "gf": 9,  "gc": 7 },
+      { "equipo": "San Patricio", "pg": 1, "pe": 0, "pp": 3, "gf": 4,  "gc": 12 }
+    ]
+  }
 ]

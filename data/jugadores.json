@@ -25,11 +25,84 @@
  }
   ,
 
-  { "id": "dario",    "nombre": "Dario Ledesma",    "posicion": "Mediocampista", "numero": 18, "foto": "img/jugadores/dario.png" },
-  { "id": "diego",    "nombre": "Diego Sequeira",   "posicion": "Delantero",     "numero": 9,  "foto": "img/jugadores/diego.png" },
-  { "id": "esteban",  "nombre": "Esteban Jimenez",  "posicion": "Delantero",     "numero": 6,  "foto": "img/jugadores/esteban.png" },
-  { "id": "eduardo",  "nombre": "Eduardo Farias",   "posicion": "Defensor",      "numero": 5,  "foto": "img/jugadores/eduardo.png" },
-  { "id": "mati",     "nombre": "Matias Sorini",    "posicion": "Delantero",     "numero": 8,  "foto": "img/jugadores/mati.png" },
-  { "id": "richard",  "nombre": "Ricardo Farias",   "posicion": "Mediocampista", "numero": 7,  "foto": "img/jugadores/richard.png" }
+  { 
+  "id": "dario",    
+  "nombre": "Dario Ledesma",    
+  "posicion": "Mediocampista", 
+  "numero": 18, 
+  "foto": "img/jugadores/dario.png" ,
+  "apodo": "El 100",
+  "partidos": 0,
+  "goles": 0,
+  "asistencias": 0,
+  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo."}
+  ,
+
+  {
+   "id": "diego",    
+  "nombre": "Diego Sequeira",   
+  "posicion": "Delantero",     
+  "numero": 9,  "foto": "img/jugadores/diego.png",
+  "apodo": "El 100",
+  "partidos": 0,
+  "goles": 0,
+  "asistencias": 0,
+  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+  ,
+
+  { 
+  "id": "esteban",  
+  "nombre": "Esteban Jimenez",  
+  "posicion": "Delantero",     
+  "numero": 6,  "foto": "img/jugadores/esteban.png",
+  "apodo": "El 100",
+  "partidos": 0,
+  "goles": 0,
+  "asistencias": 0,
+  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+  ,
+  { 
+  "id": "eduardo",  
+  "nombre": "Eduardo Farias",   
+  "posicion": "Defensor",      
+  "numero": 5,  "foto": "img/jugadores/eduardo.png",
+  "apodo": "El 100",
+  "partidos": 0,
+  "goles": 0,
+  "asistencias": 0,
+  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo."}
+  ,
+  { 
+  "id": "mati",     
+  "nombre": "Matias Sorini",    
+  "posicion": "Delantero",     "numero": 8,  
+  "foto": "img/jugadores/mati.png", 
+  "apodo": "El 100",
+  "partidos": 0,
+  "goles": 0,
+  "asistencias": 0,
+  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+  ,
+  { 
+  "id": "richard",  
+  "nombre": "Ricardo Farias",   
+  "posicion": "Mediocampista", 
+  "numero": 7,  "foto": "img/jugadores/richard.png",  "apodo": "El 100",
+  "partidos": 0,
+  "goles": 0,
+  "asistencias": 0,
+  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." },
+  
+  { 
+  "id": "kevin",  
+  "nombre": "Kevin Lopez",   
+  "posicion": "Delantero", 
+  "numero": 2,  "foto": "img/jugadores/richard.png",  "apodo": "Kevin",
+  "partidos": 0,
+  "goles": 0,
+  "asistencias": 0,
+  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+
+  
 ]
 

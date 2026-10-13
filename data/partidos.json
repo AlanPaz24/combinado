@@ -7,8 +7,18 @@
       { "equipo": "Los de siempre", "pg": 1, "pe": 0, "pp": 3, "gf": 4,  "gc": 12 }
     ]
   },
+      { 
+    "fecha": "2026-10-8", 
+    "hora": "20:30", "rival": "The borbotones", 
+    "lugar": "Cancha 1", 
+    "torneo": "Copa Chamigo 2026", 
+    "estado": "jugado" ,
+    "golesFavor": 4, 
+    "golesContra": 4,
+    "goleadores": "Alan Paz (2), Ricardo Farias, Esteban Jimenez"
+    },
     { 
-    "fecha": "2026-10-20", 
+    "fecha": "2026-09-24", 
     "hora": "20:30", "rival": "Los de siempre", 
     "lugar": "Cancha 1", 
     "torneo": "Copa Chamigo 2026", 
@@ -18,7 +28,7 @@
     "goleadores": "Kevin Lopez (2), Matias Soriini"
     },
     { 
-    "fecha": "2026-10-20", 
+    "fecha": "2026-10-1", 
     "hora": "20:30", "rival": "Royal", 
     "lugar": "Cancha 1", 
     "torneo": "Copa Chamigo 2026", 
@@ -27,16 +37,7 @@
     "golesContra": 2,
     "goleadores": "Eduardo Farias"
     },
-  { 
-    "fecha": "2026-10-20", 
-    "hora": "20:30", "rival": "The borbotones", 
-    "lugar": "Cancha 1", 
-    "torneo": "Copa Chamigo 2026", 
-    "estado": "jugado" ,
-    "golesFavor": 4, 
-    "golesContra": 4,
-    "goleadores": "Alan Paz (2), Ricardo Farias, Esteban Jimenez"
-    },
+    
 
       {   
         "fecha": "2026-10-15", 

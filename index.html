@@ -2,152 +2,91 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Combinado FC - Sitio Oficial</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Combinado FC — La pasión que nos une</title>
+  <meta name="description" content="Sitio oficial de Combinado FC: resultados, plantel, noticias y tienda. Verde y negro desde 2024.">
+  <meta name="theme-color" content="#0a0d0b">
+
+  <!-- Para que se vea lindo al compartir en WhatsApp / redes -->
+  <meta property="og:title" content="Combinado FC — La pasión que nos une">
+  <meta property="og:description" content="Resultados, plantel, noticias y tienda oficial.">
+  <meta property="og:image" content="https://alanpaz24.github.io/combinado-fc/img/logo/escudo.png">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="img/logo/escudo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
-<body>
 
-  <!-- HEADER / HERO -->
-  <header class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <div class="escudo-container">
-        <img src="assets/escudo.png" alt="Escudo Combinado FC" class="escudo-img" onerror="this.src='https://via.placeholder.com/120/0b532c/fbc02d?text=CFC'">
-      </div>
-      <h1 class="titulo-club">COMBINADO FC</h1>
-      <p class="subtitulo-club">Copa Chamigo — Grupo A</p>
-      <div class="hero-badges">
-        <span class="badge-tag">🟢 En Competencia</span>
-        <span class="badge-tag">🏆 Torneo Apertura</span>
-      </div>
-    </div>
-  </header>
+<body data-pagina="inicio">
 
-  <!-- NAVEGACIÓN -->
-  <nav class="navbar">
-    <a href="#posiciones" class="nav-link active">Tabla de Posiciones</a>
-    <a href="#plantel" class="nav-link">Plantel</a>
-    <a href="#partidos" class="nav-link">Partidos</a>
-    <a href="#lideres" class="nav-link">Líderes</a>
-  </nav>
+  <header class="cabecera" id="cabecera"></header>
 
-  <main class="container">
-
-    <!-- SECCIÓN: TABLA DE POSICIONES -->
-    <section id="posiciones" class="seccion-card">
-      <div class="seccion-header">
-        <h2>🏆 Tabla de Posiciones</h2>
-        <span class="subtext">Copa Chamigo (Grupo A)</span>
-      </div>
-      <div class="tabla-responsive">
-        <table class="tabla-custom">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th class="col-equipo">Equipo</th>
-              <th>PTS</th>
-              <th>PJ</th>
-              <th>PG</th>
-              <th>PE</th>
-              <th>PP</th>
-              <th>GF</th>
-              <th>GC</th>
-              <th>DIF</th>
-            </tr>
-          </thead>
-          <tbody id="tabla-posiciones-body">
-            <!-- JavaScript renderizará los equipos aquí automáticamente -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- SECCIÓN: PLANTEL / JUGADORES -->
-    <section id="plantel" class="seccion-card">
-      <div class="seccion-header">
-        <h2>⚽ Plantel Oficial</h2>
-        <div class="filtros-container">
-          <button class="btn-filtro active" data-posicion="Todos">Todos</button>
-          <button class="btn-filtro" data-posicion="Arquero">Arqueros</button>
-          <button class="btn-filtro" data-posicion="Defensor">Defensores</button>
-          <button class="btn-filtro" data-posicion="Mediocampista">Medios</button>
-          <button class="btn-filtro" data-posicion="Delantero">Delanteros</button>
-        </div>
-      </div>
-      <div id="contenedor-jugadores" class="grid-jugadores">
-        <!-- Render dinámico desde js/app.js -->
-      </div>
-    </section>
-
-    <!-- SECCIÓN: PARTIDOS DEL EQUIPO -->
-    <section id="partidos" class="seccion-card">
-      <div class="seccion-header">
-        <h2>📅 Partidos de Combinado FC</h2>
-      </div>
-      <div id="contenedor-partidos" class="grid-partidos">
-        <!-- Render dinámico desde js/app.js -->
-      </div>
-    </section>
-
-    <!-- SECCIÓN: LÍDERES (GOLEADORES Y ASISTIDORES) -->
-    <section id="lideres" class="seccion-card">
-      <div class="seccion-header">
-        <h2>📊 Estadísticas Individuales</h2>
-      </div>
-      <div class="grid-lideres">
-        <div class="lideres-col">
-          <h3>🎯 Top Goleadores</h3>
-          <div class="tabla-responsive">
-            <table class="tabla-custom mini-tabla">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Jugador</th>
-                  <th>PJ</th>
-                  <th>Goles</th>
-                </tr>
-              </thead>
-              <tbody id="tabla-goleadores-body"></tbody>
-            </table>
-          </div>
-        </div>
-        <div class="lideres-col">
-          <h3>👟 Top Asistidores</h3>
-          <div class="tabla-responsive">
-            <table class="tabla-custom mini-tabla">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Jugador</th>
-                  <th>PJ</th>
-                  <th>Asist.</th>
-                </tr>
-              </thead>
-              <tbody id="tabla-asistidores-body"></tbody>
-            </table>
-          </div>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="contenedor">
+        <img src="img/logo/escudo.png" alt="Escudo Combinado FC">
+        <p class="sup">LA PASIÓN QUE NOS UNE</p>
+        <h1>Combinado FC</h1>
+        <p class="sub">El mejor club del mundo — Verde y negro desde 2024</p>
+        <div class="hero-botones">
+          <a href="partidos.html" class="boton">Ver partidos</a>
+          <a href="tienda.html" class="boton secundario">Tienda oficial</a>
         </div>
       </div>
     </section>
 
+    <!-- PRÓXIMO PARTIDO Y ÚLTIMO RESULTADO -->
+    <section class="seccion alt">
+      <div class="contenedor">
+        <div class="titulo-seccion"><span>Fecha a fecha</span><h2>Partidos</h2></div>
+        <div class="grid-2" id="partidos-destacados"></div>
+        <div class="centro"><a href="partidos.html" class="boton secundario">Ver todos los partidos</a></div>
+      </div>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="titulo-seccion"><span>Así venimos</span><h2>Números del equipo</h2></div>
+        <div class="stats" id="stats"></div>
+      </div>
+    </section>
+
+    <!-- PLANTEL -->
+    <section class="seccion alt">
+      <div class="contenedor">
+        <div class="titulo-seccion"><span>Los protagonistas</span><h2>Plantel</h2></div>
+        <div class="grid-jugadores" id="plantel"></div>
+        <div class="centro"><a href="equipo.html" class="boton secundario">Ver plantel completo</a></div>
+      </div>
+    </section>
+
+    <!-- NOTICIAS -->
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="titulo-seccion"><span>Lo último</span><h2>Noticias</h2></div>
+        <div class="grid-noticias" id="noticias"></div>
+        <div class="centro"><a href="noticias.html" class="boton secundario">Todas las noticias</a></div>
+      </div>
+    </section>
+
+    <!-- BANDA TIENDA -->
+    <section class="cta">
+      <div class="contenedor">
+        <h2>Llevá los colores puestos</h2>
+        <p>Camisetas, buzos, camperas y más. Pedí por WhatsApp.</p>
+        <a href="tienda.html" class="boton">Ir a la tienda</a>
+      </div>
+    </section>
   </main>
 
-  <!-- MODAL DETALLE JUGADOR -->
-  <div id="modal-jugador" class="modal">
-    <div class="modal-content">
-      <span class="cerrar-modal">&times;</span>
-      <div id="modal-detalle-body"></div>
-    </div>
-  </div>
+  <footer class="pie" id="pie"></footer>
 
-  <footer class="footer">
-    <p>© Combinado FC — Todos los derechos reservados</p>
-  </footer>
-
-  <script src="js/app.js"></script>
+  <script src="js/comun.js" defer></script>
+  <script src="js/inicio.js" defer></script>
 </body>
 </html>

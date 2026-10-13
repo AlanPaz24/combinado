@@ -1,0 +1,13 @@
+[
+  { "id": "camiseta-titular",   "nombre": "Camiseta Titular",              "detalle": "Edición 2024",              "precio": 70000,  "imagen": "img/productos/camisetaTitular.png",      "disponible": true },
+  { "id": "camiseta-suplente",  "nombre": "Camiseta Suplente",             "detalle": "Edición 2024",              "precio": 70000,  "imagen": "img/productos/camisetaAlternativa.png",  "disponible": true },
+  { "id": "gorra-oficial",      "nombre": "Gorra Oficial",                 "detalle": "Color negro",               "precio": 25000,  "imagen": "img/productos/gorraNegra.png",           "disponible": true },
+  { "id": "buzo-canguro",       "nombre": "Buzo Canguro",                  "detalle": "Invierno 2024",             "precio": 100000, "imagen": "img/productos/buzoNegro.png",            "disponible": true },
+  { "id": "camiseta-blanca-ent","nombre": "Camiseta Blanca Entrenamiento", "detalle": "Edición 2025",              "precio": 55000,  "imagen": "img/productos/camisetaBlanca.png",       "disponible": true },
+  { "id": "camiseta-negra-ent", "nombre": "Camiseta Negra Entrenamiento",  "detalle": "Edición 2025",              "precio": 50000,  "imagen": "img/productos/camisetaNegra.png",        "disponible": true },
+  { "id": "campera-negra",      "nombre": "Campera Negra Deportiva",       "detalle": "Edición 2025",              "precio": 105000, "imagen": "img/productos/camperaNegra.png",         "disponible": true },
+  { "id": "pantalon-invierno",  "nombre": "Pantalón Negro Invierno",       "detalle": "Color negro",               "precio": 40000,  "imagen": "img/productos/pantalonNegro.png",        "disponible": true },
+  { "id": "piluso-verde",       "nombre": "Piluso Verde",                  "detalle": "Color verde",               "precio": 15000,  "imagen": "img/productos/pilusoVerde.png",          "disponible": true },
+  { "id": "pantalon-arquero",   "nombre": "Pantalón Negro Arquero",        "detalle": "Color negro",               "precio": 65000,  "imagen": "img/productos/pantalonNegroArquero.png", "disponible": true },
+  { "id": "short-blanco",       "nombre": "Short Blanco Fútbol",           "detalle": "Edición especial 2025",     "precio": 55000,  "imagen": "img/productos/shortBlanco.png",          "disponible": true }
+]

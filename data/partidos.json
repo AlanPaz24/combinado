@@ -1,44 +1,12 @@
 [
-  {
-    "id": 1,
-    "rival": "Los de siempre",
-    "fecha": "Fecha 1",
-    "hora": "22:00",
-    "condicion": "Local",
-    "estado": "finalizado",
-    "golesFavor": 3,
-    "golesRival": 1,
-    "goleadores": [
-      "Kevin Lopez (2)",
-      "Matias Sorini (1)"
-    ]
-  },
-  {
-    "id": 2,
-    "rival": "Royal fc",
-    "fecha": "Fecha 2",
-    "hora": "21:00",
-    "condicion": "Visitante",
-    "estado": "finalizado",
-    "golesFavor": 1,
-    "golesRival": 2,
-    "goleadores": [
-      "Eduardo (1)"
-    ]
-  },
-  {
-    "id": 3,
-    "rival": "The borbotones. Fc",
-    "fecha": "Fecha 3",
-    "hora": "22:00",
-    "condicion": "Local",
-    "estado": "finalizado",
-    "golesFavor": 4,
-    "golesRival": 4,
-    "goleadores": [
-      "Alan Paz (2)",
-      "Esteban Jiménez (1)",
-      "Ricardo Farias (1)"
-    ]
-  }
+  { "fecha": "2025-08-07", "rival": "Galicia A",          "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-08-14", "rival": "Osseg C",            "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-08-21", "rival": "Sancor Seguros A",   "golesFavor": 3,  "golesContra": 0, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-08-28", "rival": "Mercantil Andina",   "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-09-02", "rival": "Meridional Seguros", "golesFavor": 4,  "golesContra": 2, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-09-11", "rival": "Osseg B",            "golesFavor": 5,  "golesContra": 5, "penales": "4-3", "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-09-18", "rival": "Osseg A",            "golesFavor": 0,  "golesContra": 4, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-09-25", "rival": "San Patricio",       "golesFavor": 1,  "golesContra": 5, "torneo": "Torneo Sindicato del Seguro", "estado": "jugado" },
+  { "fecha": "2025-09-29", "rival": "Rejunte",            "golesFavor": 10, "golesContra": 5, "torneo": "Amistoso 2025", "estado": "jugado" },
+  { "fecha": "2025-10-06", "hora": "19:00", "rival": "The Malin Head", "lugar": "Sindicato del Seguro", "torneo": "Copa Desafío", "estado": "proximo" }
 ]

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "solidez-paciencia-y-destrabe",
+    "titulo": "Solidez, paciencia y destrabe sobre el final",
+    "fecha": "2025-09-29",
+    "categoria": "Crónica",
+    "imagen": "img/galeria/1.png",
+    "resumen": "Combinado hizo su presentación oficial con un 10 a 4 ante Luis e Amigos FC en un partido mucho más trabado de lo que dice el marcador.",
+    "contenido": [
+      "Combinado volvió a las canchas e hizo su presentación oficial en el marco de los preparativos para el tan esperado torneo. En un encuentro de alta intensidad y con pasajes de mucha fricción, el conjunto se midió ante un duro rival como Luis e Amigos FC, logrando imponerse con un categórico 10 a 4.",
+      "Aunque el marcador final insinúe holgura, el trámite del partido estuvo lejos de ser sencillo. Durante gran parte del cotejo, el rival planteó un esquema trabado que complicó los circuitos de juego. Sin embargo, Combinado demostró temple, paciencia y jerarquía para destrabar el encuentro en la recta final del segundo tiempo.",
+      "La gran figura y eje fundamental del equipo fue el \"Brasilero\" Richar. Desde el fondo, ofreció una auténtica exhibición defensiva: sacó absolutamente todo lo que cruzó su área, ordenó la salida limpia y le dio fluidez a la transición defensa-ataque."
+    ]
+  },
+  {
+    "id": "fuerte-golpe-deja-a-santi-fuera",
+    "titulo": "¡Fuerte golpe deja a Santi fuera de las canchas!",
+    "fecha": "2025-09-27",
+    "categoria": "Parte médico",
+    "imagen": "img/jugadores/santi.png",
+    "resumen": "Sufrió un fuerte golpe en la rodilla y estará fuera por unos días. Esperemos que se recupere pronto.",
+    "contenido": [
+      "El arquero y hombre malicia, en el partido disputado el día sábado, sufrió un fuerte golpe en la rodilla que lo tendrá fuera de las canchas por unos días. Esperemos que se recupere pronto."
+    ]
+  },
+  {
+    "id": "el-tecla-y-los-rumores",
+    "titulo": "El Tecla y los rumores de que no es argentino",
+    "fecha": "2025-09-26",
+    "categoria": "Humor",
+    "imagen": "img/jugadores/alan.png",
+    "resumen": "Los vecinos aseguran que es brasuca y el club envió al cuerpo médico a hacer un análisis de sangre.",
+    "contenido": [
+      "El mediocampista creativo se activó el día viernes jugando al truco, ya que su juego mejoró ampliamente cuando empezó a escuchar música karaoke. Los vecinos aseguran que es brasuca, y desde el club enviaron al cuerpo médico a realizar un análisis de sangre para negar el origen y descartar estos rumores."
+    ]
+  }
+]

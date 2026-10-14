@@ -6,10 +6,10 @@
   "numero": 10,
   "foto": "img/jugadores/alan.png",
   "apodo": "El 100",
-  "partidos": 0,
-  "goles": 0,
+  "partidos": 3,
+  "goles": 2,
   "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo."
+  "bio": "Mediocampista defensivo, desequilibrante con velocidad."
   },
   {
   "id": "santi",
@@ -21,7 +21,7 @@
   "partidos": 0,
   "goles": 0,
   "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo."
+  "bio": "Arquero jugador, Defensor con Malicia, mucha técnica."
  }
   ,
 
@@ -32,10 +32,10 @@
   "numero": 18, 
   "foto": "img/jugadores/dario.png" ,
   "apodo": "Discoteca, Tano",
-  "partidos": 0,
+  "partidos": 3,
   "goles": 0,
   "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo."}
+  "bio": "Mediocampista Agresivo, Luchador con buen manejo de pelota."}
   ,
 
   {
@@ -44,10 +44,10 @@
   "posicion": "Delantero",     
   "numero": 9,  "foto": "img/jugadores/diego.png",
   "apodo": "Vikingo, Rabino, ",
-  "partidos": 0,
+  "partidos": 3,
   "goles": 0,
   "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+  "bio": "Delantero con pontencia física, también Arquero con un buen saque." }
   ,
 
   { 
@@ -56,10 +56,10 @@
   "posicion": "Delantero",     
   "numero": 6,  "foto": "img/jugadores/esteban.png",
   "apodo": "Kich",
-  "partidos": 0,
-  "goles": 0,
-  "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+  "partidos": 3,
+  "goles": 1,
+  "asistencias": 1,
+  "bio": "Delantero, el más fachero del equipo, potencia física, buen juego asociado." }
   ,
   { 
   "id": "eduardo",  
@@ -67,10 +67,10 @@
   "posicion": "Defensor",      
   "numero": 5,  "foto": "img/jugadores/eduardo.png",
   "apodo": "Eduardinho, Mago",
-  "partidos": 0,
-  "goles": 0,
+  "partidos": 3,
+  "goles": 1,
   "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo."}
+  "bio": "Defensor aguerrido, mucucha fuerza altura y resistencia, buenos desmarques."}
   ,
   { 
   "id": "mati",     
@@ -78,10 +78,10 @@
   "posicion": "Delantero",     "numero": 8,  
   "foto": "img/jugadores/mati.png", 
   "apodo": "El Detonador",
-  "partidos": 0,
-  "goles": 0,
+  "partidos": 3,
+  "goles": 1,
   "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+  "bio": "Delantero con mucha velocidad, gambeta y gol." }
   ,
   { 
   "id": "richard",  
@@ -89,10 +89,10 @@
   "posicion": "Mediocampista", 
   "numero": 7,  "foto": "img/jugadores/richard.png",  
   "apodo": "El Tecla, Capitán, Muela",
-  "partidos": 0,
-  "goles": 0,
-  "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." },
+  "partidos": 3,
+  "goles": 1,
+  "asistencias": 2,
+  "bio": "Todo terreno, ambidiestro, gran juego asociado y lectura del partido." },
   
   { 
   "id": "kevin",  
@@ -100,10 +100,10 @@
   "posicion": "Delantero", 
   "numero": 2,  "foto": "img/jugadores/kevin.png",  
   "apodo": "Kevin",
-  "partidos": 0,
-  "goles": 0,
-  "asistencias": 0,
-  "bio": "Mediocampista creativo. Arranca la temporada con ganas de todo." }
+  "partidos": 2,
+  "goles": 2,
+  "asistencias": 2,
+  "bio": "Delantero, se asocia bien con el equipo, tiempiesta y gambeteador" }
 
   
 ]

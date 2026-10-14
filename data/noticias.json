@@ -14,13 +14,13 @@
   },
   {
     "id": "fuerte-golpe-deja-a-santi-fuera",
-    "titulo": "¡Fuerte golpe deja a Santi fuera de las canchas!",
+    "titulo": "El muchacho solo quiere jugar en potrero y en cancha de tierra",
     "fecha": "2025-09-27",
-    "categoria": "Parte médico",
+    "categoria": "Humor",
     "imagen": "img/jugadores/santi.png",
-    "resumen": "Sufrió un fuerte golpe en la rodilla y estará fuera por unos días. Esperemos que se recupere pronto.",
+    "resumen": "El señor Malicia o como el se autoproclama 'La Máquina' no jugará este torneo. ",
     "contenido": [
-      "El arquero y hombre malicia, en el partido disputado el día sábado, sufrió un fuerte golpe en la rodilla que lo tendrá fuera de las canchas por unos días. Esperemos que se recupere pronto."
+      "El arquero y hombre malicia, dispone de horarios acotados ahora que será padre, este torneo tendremos una gran ausencia de el sujeto que hizo enojar y reir a rivales. Haciendo goles y siendo expulsado, se lo extrañará en las canchas"
     ]
   },
   {
@@ -28,26 +28,44 @@
     "titulo": "El Tecla y los rumores de que no es argentino",
     "fecha": "2025-09-26",
     "categoria": "Humor",
-    "imagen": "img/jugadores/alan.png",
+    "imagen": "img/noticias/brasilero.jpg",
     "resumen": "Los vecinos aseguran que es brasuca y el club envió al cuerpo médico a hacer un análisis de sangre.",
     "contenido": [
       "El mediocampista creativo se activó el día viernes jugando al truco, ya que su juego mejoró ampliamente cuando empezó a escuchar música karaoke. Los vecinos aseguran que es brasuca, y desde el club enviaron al cuerpo médico a realizar un análisis de sangre para negar el origen y descartar estos rumores."
     ]
   },
   {
-    "id": "victoria-ante-osseg-a",
-    "titulo": "Victoria clave ante Osseg A",
+    "id": "Empate vs The Borbotones",
+    "titulo": "Empate en una noche con polémica",
     "fecha": "2026-10-20",
     "categoria": "Crónica",
-    "imagen": "img/noticias/osseg-a.png",
-    "resumen": "Con un gran segundo tiempo, Combinado se quedó con los tres puntos.",
+    "imagen": "img/noticias/noticiapartido.jpg",
+    "resumen": "Combinado FC vs The Borbotones",
     "contenido": [
       "Primer párrafo de la crónica.",
       "Segundo párrafo."
     ],
     "autor": "Alan Paz",
-    "pie": "El equipo festejando al final del partido",
-    "fotos": ["img/noticias/osseg-a-2.png", "img/noticias/osseg-a-3.png"]
+    "pie": "madonasanta",
+    "fotos": ["img/noticias/noticiapartido.jpg", "img/noticias/partido2"]
+  },
+    {
+    "id": "Diego se pone los Ojos",
+    "titulo": "¿Se pone los ojos Diego",
+    "fecha": "2026-10-14",
+    "categoria": "Humor",
+    "imagen": "img/noticias/noticiadiego2.jpg",
+    "resumen": "¿Se pone ojos Diego?",
+    "contenido": [
+      "El Vikingo Diego, delantero de área y goleador de raza, podría dar un giro inesperado en su carrera y ponerse los guantes para defender el arco de Combinado en esta fecha. ⚽😂",
+      "Tras varios intentos, pruebas y maniobras para lograr que el 9 se coloque los ojos y pueda atajar de la mejor manera, el cuerpo técnico mantiene la ilusión de que esta innovación dé sus frutos.",
+      "¿Será el nacimiento de un nuevo arquero estrella o una nueva preocupación para la defensa? 👀",
+      "¡La pelota está en juego y el arco espera! 🧤🔥"
+    ],
+    "autor": "Alan Paz",
+    "pie": "Alguien haga algo",
+    "fotos": ["img/noticias/noticiadiego2.jpg", "img/noticias/noticiadiego.jpg"]
   }
+  
   
 ]

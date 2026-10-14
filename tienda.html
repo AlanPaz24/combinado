@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tienda — Combinado FC</title>
+  <meta name="description" content="Tienda oficial de Combinado FC: camisetas, buzos, camperas y accesorios. Pedí por WhatsApp.">
+  <meta name="theme-color" content="#0a0d0b">
+  <link rel="icon" href="img/logo/escudo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body data-pagina="tienda">
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main>
+    <section class="banner">
+      <div class="contenedor">
+        <span>Tienda oficial</span>
+        <h1>Tienda</h1>
+        <p>Llevá los colores puestos. Armá tu pedido y mandalo por WhatsApp.</p>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="filtros" id="filtros"></div>
+        <div class="grid-productos" id="grid-productos"></div>
+        <p class="nota-tienda">Los precios y la disponibilidad se confirman por WhatsApp. El pago y la entrega se coordinan con el club.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Carrito -->
+  <button class="carrito-flotante" id="abrir-carrito" aria-label="Ver mi pedido">
+    🛒 <span>Mi pedido</span> <span class="cant" id="carrito-cant">0</span>
+  </button>
+  <div class="carrito-fondo" id="carrito-fondo" hidden></div>
+  <aside class="carrito" id="carrito" aria-label="Mi pedido" aria-hidden="true">
+    <div class="carrito-cab">
+      <h2>Mi pedido</h2>
+      <button id="cerrar-carrito" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="carrito-items" id="carrito-items"></div>
+    <div class="carrito-pie" id="carrito-pie"></div>
+  </aside>
+
+  <footer class="pie" id="pie"></footer>
+
+  <script src="js/comun.js" defer></script>
+  <script src="js/tienda.js" defer></script>
+</body>
+</html>

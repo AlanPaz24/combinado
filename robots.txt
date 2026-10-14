@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alanpaz24.github.io/combinado/sitemap.xml

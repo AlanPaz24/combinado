@@ -33,5 +33,21 @@
     "contenido": [
       "El mediocampista creativo se activó el día viernes jugando al truco, ya que su juego mejoró ampliamente cuando empezó a escuchar música karaoke. Los vecinos aseguran que es brasuca, y desde el club enviaron al cuerpo médico a realizar un análisis de sangre para negar el origen y descartar estos rumores."
     ]
+  },
+  {
+    "id": "victoria-ante-osseg-a",
+    "titulo": "Victoria clave ante Osseg A",
+    "fecha": "2026-10-20",
+    "categoria": "Crónica",
+    "imagen": "img/noticias/osseg-a.png",
+    "resumen": "Con un gran segundo tiempo, Combinado se quedó con los tres puntos.",
+    "contenido": [
+      "Primer párrafo de la crónica.",
+      "Segundo párrafo."
+    ],
+    "autor": "Alan Paz",
+    "pie": "El equipo festejando al final del partido",
+    "fotos": ["img/noticias/osseg-a-2.png", "img/noticias/osseg-a-3.png"]
   }
+  
 ]

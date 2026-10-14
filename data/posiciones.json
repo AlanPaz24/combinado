@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "torneo": "Copa Chamigo 2026",
+    "equipos": [
+      { "equipo": "Combinado FC",   "pg": 1, "pe": 1, "pp": 1, "gf": 8, "gc": 7 },
+      { "equipo": "The borbotones", "pg": 2, "pe": 1, "pp": 1, "gf": 9, "gc": 7 },
+      { "equipo": "Los de siempre", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
+    ]
+  }
+]

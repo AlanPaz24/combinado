@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noticia — Combinado FC</title>
+  <meta name="description" content="Noticias de Combinado FC.">
+  <meta name="theme-color" content="#0a0d0b">
+  <link rel="icon" href="img/logo/escudo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body data-pagina="noticias">
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main>
+    <section class="seccion">
+      <div class="contenedor">
+        <article class="articulo" id="articulo">
+          <p class="mensaje-vacio">Cargando noticia...</p>
+        </article>
+        <div class="relacionadas" id="relacionadas" hidden>
+          <h2>Seguí leyendo</h2>
+          <div class="grid-noticias" id="lista-relacionadas"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+  <script src="js/comun.js" defer></script>
+  <script src="js/noticia.js" defer></script>
+</body>
+</html>

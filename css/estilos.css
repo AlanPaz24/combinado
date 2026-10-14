@@ -382,3 +382,59 @@ button.jugador:focus-visible { outline: 3px solid var(--verde); outline-offset: 
 
 .relacionadas { margin-top: 4rem; }
 .relacionadas h2 { font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center; }
+
+/* ============ GALERÍA ============ */
+.grid-galeria {
+  columns: 3 260px; column-gap: 1rem;
+}
+.foto-item {
+  display: block; width: 100%; padding: 0; margin: 0 0 1rem;
+  break-inside: avoid; position: relative; overflow: hidden;
+  border: 1px solid var(--borde); border-radius: var(--radio);
+  background: var(--gris); cursor: zoom-in;
+}
+.foto-item img { width: 100%; display: block; transition: transform .4s; }
+.foto-item:hover img { transform: scale(1.05); }
+.foto-item:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
+.foto-item .leyenda {
+  position: absolute; inset: auto 0 0 0; padding: 2rem 1rem .8rem;
+  background: linear-gradient(0deg, rgba(0, 0, 0, .85), transparent);
+  color: #fff; font-size: .85rem; text-align: left;
+  opacity: 0; transition: opacity .25s;
+}
+.foto-item:hover .leyenda, .foto-item:focus-visible .leyenda { opacity: 1; }
+
+/* Visor a pantalla completa */
+.visor {
+  border: none; background: transparent; color: #fff; padding: 0;
+  width: 100vw; height: 100vh; max-width: none; max-height: none;
+}
+.visor::backdrop { background: rgba(0, 0, 0, .94); }
+.visor-contenido {
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 3.5rem 1rem 1.5rem;
+}
+.visor-img {
+  max-width: min(1100px, 100%); max-height: 78vh; object-fit: contain;
+  border-radius: 8px; user-select: none; -webkit-user-drag: none;
+}
+.visor-pie { margin-top: 1rem; text-align: center; max-width: 700px; }
+.visor-pie p { color: #dfe8e1; }
+.visor-pie small { color: var(--texto-suave); letter-spacing: .12em; text-transform: uppercase; font-size: .75rem; }
+.visor-btn {
+  position: absolute; background: rgba(255, 255, 255, .1); color: #fff;
+  border: 1px solid rgba(255, 255, 255, .2); border-radius: 50%;
+  width: 48px; height: 48px; font-size: 1.3rem; cursor: pointer;
+  transition: background .2s;
+}
+.visor-btn:hover { background: var(--verde); color: #04120a; }
+.visor-cerrar { top: 1rem; right: 1rem; }
+.visor-ant { left: 1rem; top: 50%; transform: translateY(-50%); }
+.visor-sig { right: 1rem; top: 50%; transform: translateY(-50%); }
+
+@media (max-width: 600px) {
+  .grid-galeria { columns: 2 140px; column-gap: .6rem; }
+  .foto-item { margin-bottom: .6rem; }
+  .visor-ant, .visor-sig { top: auto; bottom: 1rem; transform: none; }
+  .visor-contenido { padding-bottom: 5rem; }
+}

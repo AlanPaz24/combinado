@@ -1,6 +1,7 @@
 [
   { "imagen": "img/galeria/1.png", "descripcion": "Foto del plantel" },
-  { "imagen": "img/galeria/2.png", "descripcion": "Foto del plantel" },
+  { "imagen": "img/galeria/2.png", "descripcion": "Partidos" },
   { "imagen": "img/galeria/3.png", "descripcion": "Foto del plantel" },
+  { "imagen": "img/galeria/4.png", "descripcion": "Foto del plantel" },
   { "imagen": "img/galeria/4.png", "descripcion": "Foto del plantel" }
 ]

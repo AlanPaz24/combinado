@@ -21,7 +21,7 @@
   "partidos": 0,
   "goles": 0,
   "asistencias": 0,
-  "bio": "Arquero jugador, Defensor con Malicia, mucha técnica, especialista en tiros libres."
+  "bio": "Arquero jugador, Defensor con malicia, mucha técnica, especialista en tiros libres."
  }
   ,
 
@@ -55,7 +55,7 @@
   "nombre": "Esteban Jimenez",  
   "posicion": "Delantero",     
   "numero": 6,  "foto": "img/jugadores/esteban.png",
-  "apodo": "Kich",
+  "apodo": "Kich, Magnate",
   "partidos": 3,
   "goles": 1,
   "asistencias": 1,

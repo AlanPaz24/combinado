@@ -4,13 +4,13 @@
     "equipos": [
       { "equipo": "Combinado FC",   "pg": 1, "pe": 1, "pp": 1, "gf": 8, "gc": 7 },
       { "equipo": "The borbotones", "pg": 1, "pe": 1, "pp": 1, "gf": 9, "gc": 7 },
-      { "equipo": "Los de siempre", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
-      { "equipo": "Los pibes de la barber", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
-      { "equipo": "Los Perros", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
-      { "equipo": "Los 14 FC", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
-      { "equipo": "Royal FC", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
-      { "equipo": "Zabaleta", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
-      { "equipo": "El Rejunte FC", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
+      { "equipo": "Los de siempre", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 },
+      { "equipo": "Los pibes de la barber", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 },
+      { "equipo": "Los Perros", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 },
+      { "equipo": "Los 14 FC", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 },
+      { "equipo": "Royal FC", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 },
+      { "equipo": "Zabaleta", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 },
+      { "equipo": "El Rejunte FC", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 },
       { "equipo": "Equipo Fortu", "pg": 1, "pe": 0, "pp": 3, "gf": 4, "gc": 12 }
     ]
   }

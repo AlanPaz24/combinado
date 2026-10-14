@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto — Combinado FC</title>
+  <meta name="description" content="Contactá a Combinado FC: consultas, desafíos, tienda y más. Escribinos por WhatsApp o email.">
+  <meta name="theme-color" content="#0a0d0b">
+  <link rel="canonical" href="https://alanpaz24.github.io/combinado/contacto.html">
+
+  <meta property="og:title" content="Contacto — Combinado FC">
+  <meta property="og:description" content="Escribinos por WhatsApp o email.">
+  <meta property="og:image" content="https://alanpaz24.github.io/combinado/img/logo/compartir.jpg">
+  <meta property="og:url" content="https://alanpaz24.github.io/combinado/contacto.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+
+  <link rel="icon" href="img/logo/escudo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body data-pagina="contacto">
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main>
+    <section class="banner">
+      <div class="contenedor">
+        <span>Hablemos</span>
+        <h1>Contacto</h1>
+        <p>¿Querés desafiarnos, sumarte al equipo o consultar por la tienda? Escribinos.</p>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor contacto-grid">
+
+        <div>
+          <h2>Canales</h2>
+          <div class="tarjetas-contacto" id="canales"></div>
+        </div>
+
+        <form class="formulario" id="formulario" novalidate>
+          <h2>Mandanos un mensaje</h2>
+
+          <div class="campo">
+            <label for="f-nombre">Tu nombre</label>
+            <input type="text" id="f-nombre" autocomplete="name" required>
+          </div>
+
+          <div class="campo">
+            <label for="f-motivo">Motivo</label>
+            <select id="f-motivo">
+              <option>Consulta general</option>
+              <option>Tienda / pedidos</option>
+              <option>Quiero sumarme al equipo</option>
+              <option>Desafío o amistoso</option>
+              <option>Prensa o sponsors</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="f-mensaje">Mensaje</label>
+            <textarea id="f-mensaje" required></textarea>
+          </div>
+
+          <div class="form-botones">
+            <button type="submit" class="boton">Enviar por WhatsApp</button>
+            <button type="button" class="boton secundario" id="btn-email">Enviar por email</button>
+          </div>
+          <p class="form-aviso" id="form-aviso" aria-live="polite"></p>
+          <p class="form-nota">Al enviar se abre WhatsApp o tu app de correo con el mensaje ya escrito. Solo tenés que apretar enviar.</p>
+        </form>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+  <script src="js/comun.js" defer></script>
+  <script src="js/contacto.js" defer></script>
+</body>
+</html>

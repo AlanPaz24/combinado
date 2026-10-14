@@ -524,3 +524,46 @@ button.jugador:focus-visible { outline: 3px solid var(--verde); outline-offset: 
 .carrito-pie .boton { width: 100%; text-align: center; }
 .carrito-pie .vaciar { display: block; margin: .9rem auto 0; background: none; border: none; color: var(--texto-suave); font-size: .82rem; cursor: pointer; text-decoration: underline; }
 .nota-tienda { text-align: center; color: var(--texto-suave); font-size: .88rem; margin-top: 2.5rem; }
+
+/* ============ CONTACTO ============ */
+.contacto-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2.5rem; align-items: start; }
+.contacto-grid h2 { font-size: 1.8rem; margin-bottom: 1.2rem; }
+.tarjetas-contacto { display: flex; flex-direction: column; gap: .8rem; }
+.tarjeta-contacto {
+  display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
+  background: var(--gris); border: 1px solid var(--borde); border-radius: var(--radio);
+  transition: border-color .2s, transform .2s;
+}
+.tarjeta-contacto:hover { border-color: var(--verde); transform: translateX(4px); }
+.tarjeta-contacto .ico {
+  width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center; font-size: 1.3rem;
+  background: rgba(25, 194, 90, .12);
+}
+.tarjeta-contacto b { display: block; font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: .04em; }
+.tarjeta-contacto small { color: var(--texto-suave); }
+
+.formulario {
+  background: var(--gris); border: 1px solid var(--borde);
+  border-radius: var(--radio); padding: 2rem;
+}
+.campo { margin-bottom: 1.2rem; }
+.campo label {
+  display: block; font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--texto-suave); margin-bottom: .4rem;
+}
+.campo input, .campo select, .campo textarea {
+  width: 100%; background: var(--gris-claro); color: var(--texto);
+  border: 1px solid var(--borde); border-radius: 10px; padding: .8rem 1rem;
+  font: 400 .98rem 'Inter', sans-serif;
+}
+.campo textarea { min-height: 140px; resize: vertical; }
+.campo input:focus, .campo select:focus, .campo textarea:focus { outline: 2px solid var(--verde); }
+.form-botones { display: flex; flex-wrap: wrap; gap: .8rem; }
+.form-aviso { margin-top: 1rem; min-height: 1.2em; font-size: .88rem; color: var(--amarillo); }
+.form-nota { margin-top: 1rem; font-size: .8rem; color: var(--texto-suave); }
+
+@media (max-width: 860px) {
+  .contacto-grid { grid-template-columns: 1fr; }
+  .formulario { padding: 1.4rem; }
+}

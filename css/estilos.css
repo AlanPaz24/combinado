@@ -615,3 +615,36 @@ button.jugador:focus-visible { outline: 3px solid var(--verde); outline-offset: 
   .visor-img { max-height: 50vh; }
   .mini { width: 52px; height: 52px; }
 }
+/* ============ ESTADÍSTICAS ============ */
+.nota-datos { color: var(--texto-suave); font-size: .85rem; }
+
+.lideres { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+.lider {
+  display: flex; align-items: center; gap: 1rem; padding: 1.3rem;
+  background: var(--gris); border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.lider img {
+  width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+  object-fit: cover; object-position: top; background: var(--gris-claro);
+  border: 2px solid var(--verde);
+}
+.lider small { display: block; color: var(--texto-suave); font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.lider .nombre { display: block; font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; line-height: 1.2; }
+.lider .valor { font-family: 'Oswald', sans-serif; font-size: 1.9rem; color: var(--verde); font-weight: 700; line-height: 1.1; }
+.lider .unidad { color: var(--texto-suave); font-size: .85rem; margin-left: .2rem; }
+
+.ayuda { color: var(--texto-suave); font-size: .85rem; margin: -.6rem 0 1rem; }
+.tabla th.ord { cursor: pointer; user-select: none; }
+.tabla th.ord:hover { color: var(--verde); }
+.tabla th.ord.activo { color: var(--verde); }
+.tabla th.ord.activo::after { content: ' ▾'; }
+.jug-cel { display: flex; align-items: center; gap: .7rem; }
+.jug-cel img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; object-position: top; background: var(--gris-claro); flex-shrink: 0; }
+.jug-cel b { display: block; font-weight: 600; }
+.jug-cel small { display: block; color: var(--texto-suave); font-size: .75rem; }
+
+/* Con 8 secciones, el menú necesita un poco más de aire en pantallas medianas */
+@media (min-width: 861px) and (max-width: 1120px) {
+  .nav { gap: 1rem; }
+  .nav a { font-size: .78rem; }
+}

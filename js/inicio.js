@@ -51,12 +51,13 @@ function htmlStats(s) {
 }
 
 function htmlJugador(j) {
+  const tieneNum = j.numero !== undefined && j.numero !== null && j.numero !== '';
   return `
     <article class="jugador">
-      <img src="${esc(j.foto)}" alt="${esc(j.nombre)}, ${esc(j.posicion)} de Combinado FC" loading="lazy"
+      <img src="${esc(j.foto)}" alt="${esc(j.nombre)}, ${esc(textoPosiciones(j))} de Combinado FC" loading="lazy"
            onerror="this.src='img/logo/escudo.png'">
-      <span class="numero">#${esc(j.numero)}</span>
-      <div class="info"><h4>${esc(j.nombre)}</h4><p>${esc(j.posicion)}</p></div>
+      ${tieneNum ? `<span class="numero">#${esc(j.numero)}</span>` : ''}
+      <div class="info"><h4>${esc(j.nombre)}</h4><p>${esc(textoPosiciones(j))}</p></div>
     </article>`;
 }
 

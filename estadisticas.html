@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estadísticas — Combinado FC</title>
+  <meta name="description" content="Ranking de goleadores, asistencias y partidos jugados de Combinado FC.">
+  <meta name="theme-color" content="#0a0d0b">
+  <link rel="canonical" href="https://alanpaz24.github.io/combinado/estadisticas.html">
+  <meta property="og:title" content="Estadísticas — Combinado FC">
+  <meta property="og:description" content="Goleadores, asistencias y ranking del plantel.">
+  <meta property="og:image" content="https://alanpaz24.github.io/combinado/img/logo/escudo.png">
+  <meta property="og:url" content="https://alanpaz24.github.io/combinado/estadisticas.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <link rel="icon" href="img/logo/escudo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body data-pagina="estadisticas">
+
+  <header class="cabecera" id="cabecera"></header>
+
+  <main>
+    <section class="banner">
+      <div class="contenedor">
+        <span>Los números</span>
+        <h1>Estadísticas</h1>
+        <p>Goleadores, asistencias y el ranking de todo el plantel.</p>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor">
+
+        <div class="barra-torneo">
+          <div>
+            <label for="selector-torneo">Torneo</label><br>
+            <select id="selector-torneo"></select>
+          </div>
+          <span class="nota-datos" id="nota-datos"></span>
+        </div>
+
+        <p class="mensaje-vacio" id="vacio" hidden>
+          Todavía no hay estadísticas cargadas para este torneo. Se van a ir mostrando a medida que se carguen los partidos.
+        </p>
+
+        <div id="bloque-ranking" hidden>
+          <div class="lideres" id="lideres"></div>
+
+          <h2 class="subtitulo">Ranking del plantel</h2>
+          <p class="ayuda">Tocá el título de una columna para ordenar.</p>
+          <div class="tabla-wrap">
+            <table class="tabla">
+              <thead><tr id="cabeza-tabla"></tr></thead>
+              <tbody id="cuerpo-tabla"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="bloque-arqueros" hidden>
+          <h2 class="subtitulo">Arqueros</h2>
+          <div class="tabla-wrap">
+            <table class="tabla">
+              <thead>
+                <tr><th>#</th><th class="izq">Arquero</th><th>PJ</th><th>GC</th><th>Prom. GC</th><th>Vallas invictas</th></tr>
+              </thead>
+              <tbody id="cuerpo-arqueros"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie" id="pie"></footer>
+
+  <script src="js/comun.js" defer></script>
+  <script src="js/estadisticas.js" defer></script>
+</body>
+</html>

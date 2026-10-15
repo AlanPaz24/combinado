@@ -27,7 +27,7 @@
   "golesContra": 1,
   "jugaron": ["alan", "diego", "dario", "esteban", "richard","mati","eduardo","kevin"],
   "goles": { "kevin": 2, "mati": 1 },
-  "asistencias": { "esteban": 1 },
+  "asistencias": { "esteban": 1, "richard": 2 },
   "amarillas": [],
   "rojas": [],
   "figura": "kevin",
@@ -43,21 +43,13 @@
   "estado": "jugado",
   "golesFavor": 1,
   "golesContra": 2,
-  "jugaron": ["alan", "diego", "dario", "esteban", "richard","mati","eduardo","julian"],
+  "jugaron": ["alan", "diego", "dario", "esteban", "richard","eduardo","julian"],
   "goles": { "eduardo": 1 },
   "asistencias": { "diego": 1 },
   "amarillas": ["dario"],
   "rojas": [],
-  "figura": [],
+  "figura": "eduardo",
   "arquero": "julian"
-  },
-    {
-    "fecha": "2026-10-15",
-    "hora": "20:00",
-    "rival": "Los Perros",
-    "lugar": "Cancha 1",
-    "torneo": "Copa Chamigo 2026",
-    "estado": "proximo"
   },
   {
   "fecha": "2026-10-15",
@@ -65,15 +57,6 @@
   "rival": "Los Perros",
   "lugar": "Cancha 1",
   "torneo": "Copa Chamigo 2026",
-  "estado": "proximo",
-  "golesFavor": 0,
-  "golesContra": 0,
-  "jugaron": [],
-  "goles": {  },
-  "asistencias": { },
-  "amarillas": [],
-  "rojas": [],
-  "figura": [],
-  "arquero": ""
+  "estado": "proximo"
   }
 ]

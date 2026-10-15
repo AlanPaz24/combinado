@@ -2,7 +2,7 @@
   {
   "id": "alan",
   "nombre": "Alan Paz",
-  "posicion": ["Mediocampista"],
+  "posicion": "Mediocampista",
   "numero": 10,
   "foto": "img/jugadores/alan.png",
   "apodo": "El 100",
@@ -14,7 +14,7 @@
   {
   "id": "santi",
   "nombre": "Santiago Paz",
-  "posicion": ["Arquero","Defensor","Delantero"],     
+  "posicion": "Arquero",     
   "numero": 20, 
   "foto": "img/jugadores/santi.png",
   "apodo": "La Máquina, Malicia, Trebino",
@@ -41,7 +41,7 @@
   {
    "id": "diego",    
   "nombre": "Diego Sequeira",   
-  "posicion": ["Arquero","Delantero"],     
+  "posicion": "Delantero",     
   "numero": 9,  "foto": "img/jugadores/diego.png",
   "apodo": "Vikingo, Rabino, ",
   "partidos": 3,

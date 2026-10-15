@@ -3,6 +3,16 @@
 let todos = [];
 let posiciones = [];
 let torneoActual = 'todos';
+let nombres = {};
+
+function textoGoleadores(p) {
+  if (p.goles && Object.keys(p.goles).length) {
+    return Object.entries(p.goles)
+      .map(([id, n]) => (n > 1 ? `${nombres[id] || id} (${n})` : (nombres[id] || id)))
+      .join(', ');
+  }
+  return p.goleadores || '';
+}
 
 // Para agrupar torneos aunque cambie una mayúscula o un espacio
 const clave = t => String(t || 'Sin torneo').trim().toLowerCase();
@@ -42,8 +52,8 @@ function filaPartido(p, mostrarTorneo) {
     : `<span class="fp-vs">VS</span>`;
 
   const extras = [];
-  if (!jugado && p.lugar) extras.push(`<span>📍 ${esc(p.lugar)}</span>`);
-  if (jugado && p.goleadores) extras.push(`<span>⚽ ${esc(p.goleadores)}</span>`);
+    const textoGol = textoGoleadores(p);
+  if (jugado && textoGol) extras.push(`<span>⚽ ${esc(textoGol)}</span>`);
   if (p.noticia) extras.push(`<a href="noticia.html?id=${encodeURIComponent(p.noticia)}">Leer la crónica →</a>`);
 
   return `
@@ -130,10 +140,13 @@ function dibujar() {
 
 async function iniciarPartidos() {
   try {
-    [todos, posiciones] = await Promise.all([
+        let jugs;
+    [todos, posiciones, jugs] = await Promise.all([
       cargarJSON('data/partidos.json'),
-      cargarJSON('data/posiciones.json').catch(() => [])
+      cargarJSON('data/posiciones.json').catch(() => []),
+      cargarJSON('data/jugadores.json').catch(() => [])
     ]);
+    jugs.forEach(j => { nombres[j.id] = j.nombre; });
   } catch (e) {
     console.error(e);
     document.getElementById('lista-resultados').innerHTML =

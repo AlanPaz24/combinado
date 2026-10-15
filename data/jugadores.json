@@ -2,7 +2,7 @@
   {
   "id": "alan",
   "nombre": "Alan Paz",
-  "posicion": "Mediocampista",
+  "posicion": ["Mediocampista"],
   "numero": 10,
   "foto": "img/jugadores/alan.png",
   "apodo": "El 100",
@@ -14,7 +14,7 @@
   {
   "id": "santi",
   "nombre": "Santiago Paz",
-  "posicion": "Defensor",      
+  "posicion": ["Arquero","Defensor","Delantero"],     
   "numero": 20, 
   "foto": "img/jugadores/santi.png",
   "apodo": "La Máquina, Malicia, Trebino",
@@ -41,7 +41,7 @@
   {
    "id": "diego",    
   "nombre": "Diego Sequeira",   
-  "posicion": "Delantero",     
+  "posicion": ["Arquero","Delantero"],     
   "numero": 9,  "foto": "img/jugadores/diego.png",
   "apodo": "Vikingo, Rabino, ",
   "partidos": 3,
@@ -54,7 +54,8 @@
   "id": "esteban",  
   "nombre": "Esteban Jimenez",  
   "posicion": "Delantero",     
-  "numero": 21,  "foto": "img/jugadores/esteban.png",
+  "numero": 21, 
+  "foto": "img/jugadores/esteban.png",
   "apodo": "Kich, Magnate",
   "partidos": 3,
   "goles": 1,
@@ -75,7 +76,8 @@
   { 
   "id": "mati",     
   "nombre": "Matias Sorini",    
-  "posicion": "Delantero",     "numero": 8,  
+  "posicion": "Delantero",     
+  "numero": 8,  
   "foto": "img/jugadores/mati.png", 
   "apodo": "El Detonador",
   "partidos": 3,

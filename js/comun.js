@@ -61,6 +61,7 @@ const PAGINAS = [
   { id: 'inicio',   texto: 'Inicio',   url: 'index.html' },
   { id: 'equipo',   texto: 'Equipo',   url: 'equipo.html' },
   { id: 'partidos', texto: 'Partidos', url: 'partidos.html' },
+  { id: 'estadisticas', texto: 'Estadísticas', url: 'estadisticas.html' },
   { id: 'noticias', texto: 'Noticias', url: 'noticias.html' },
   { id: 'galeria',  texto: 'Galería',  url: 'galeria.html' },
   { id: 'tienda',   texto: 'Tienda',   url: 'tienda.html' },
@@ -124,3 +125,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error(e);
   }
 });
+
+/* ===== POSICIONES Y ESTADÍSTICAS DE JUGADORES ===== */
+
+// Acepta "posiciones": ["Arquero","Defensor"] o el viejo "posicion": "Defensor"
+function posicionesDe(j) {
+  const lista = Array.isArray(j.posiciones) ? j.posiciones : (j.posicion ? [j.posicion] : []);
+  return lista.filter(Boolean);
+}
+
+function textoPosiciones(j) {
+  return posicionesDe(j).join(' / ') || 'Jugador';
+}
+
+// Suma las estadísticas de cada jugador a partir de los partidos jugados
+function estadisticasJugadores(partidos) {
+  const m = {};
+  const get = id => m[id] || (m[id] = { pj: 0, g: 0, a: 0, am: 0, ro: 0, fig: 0, arq: 0, gc: 0, vi: 0 });
+
+  partidos.filter(p => p.estado === 'jugado').forEach(p => {
+    const goles = p.goles || {};
+    const asist = p.asistencias || {};
+
+    // Cuenta como "jugó" quien figura en cualquiera de estos campos
+    const presentes = new Set([
+      ...(p.jugaron || []), ...Object.keys(goles), ...Object.keys(asist),
+      ...(p.amarillas || []), ...(p.rojas || [])
+    ]);
+    if (p.arquero) presentes.add(p.arquero);
+    if (p.figura) presentes.add(p.figura);
+
+    presentes.forEach(id => { get(id).pj++; });
+    Object.entries(goles).forEach(([id, n]) => { get(id).g += Number(n) || 0; });
+    Object.entries(asist).forEach(([id, n]) => { get(id).a += Number(n) || 0; });
+    (p.amarillas || []).forEach(id => { get(id).am++; });
+    (p.rojas || []).forEach(id => { get(id).ro++; });
+    if (p.figura) get(p.figura).fig++;
+
+    if (p.arquero) {
+      const s = get(p.arquero);
+      s.arq++;
+      s.gc += Number(p.golesContra) || 0;
+      if ((Number(p.golesContra) || 0) === 0) s.vi++;
+    }
+  });
+  return m;
+}
